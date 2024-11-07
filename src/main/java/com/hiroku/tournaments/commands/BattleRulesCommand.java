@@ -15,7 +15,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class BattleRulesCommand implements Command<CommandSource> {
     public LiteralArgumentBuilder<CommandSource> create() {
-        return Commands.literal("rules")
+        return Commands.literal("battlerules")
 //				.description(Text.of("Sets the Pixelmon battle rules. The battle rule argument should be the exported battle rules but instead of new lines, use commas"))
                 .requires(source -> User.hasPermission(source, "tournaments.command.admin.battlerules"))
                 .then(
