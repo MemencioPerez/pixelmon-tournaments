@@ -80,7 +80,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
 
-    implementation fg.deobf('blank:pixelmon-1.16.5:9.1.7-server')
+    implementation fg.deobf('blank:pixelmon-1.16.5:9.1.12-server')
 }
 
 jar {
