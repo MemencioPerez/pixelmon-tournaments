@@ -11,6 +11,7 @@ import com.hiroku.tournaments.api.rule.types.RuleBase;
 import java.io.IOException;
 
 public class RuleBaseTypeAdapterFactory implements TypeAdapterFactory {
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
@@ -20,6 +21,8 @@ public class RuleBaseTypeAdapterFactory implements TypeAdapterFactory {
     }
 
     public static class RuleBaseTypeAdapter extends TypeAdapter<RuleBase> {
+
+        @Override
         public void write(JsonWriter out, RuleBase value) throws IOException {
             out.beginObject();
             String[] parts = value.getSerializationString().split(":");
@@ -43,6 +46,7 @@ public class RuleBaseTypeAdapterFactory implements TypeAdapterFactory {
             out.endObject();
         }
 
+        @Override
         public RuleBase read(JsonReader in) throws IOException {
             RuleBase ruleBase = null;
             in.beginObject();

@@ -7,6 +7,8 @@ import com.pixelmonmod.pixelmon.battles.api.rules.BattleRules;
 import java.io.IOException;
 
 public class BattleRulesTypeAdapter extends TypeAdapter<BattleRules> {
+
+   @Override
    public void write(JsonWriter out, BattleRules value) throws IOException {
       out.beginObject();
       String[] rules = value.exportText().split("\n");
@@ -20,6 +22,7 @@ public class BattleRulesTypeAdapter extends TypeAdapter<BattleRules> {
       out.endObject();
    }
 
+   @Override
    public BattleRules read(JsonReader in) throws IOException {
       in.beginObject();
       StringBuilder builder = new StringBuilder();

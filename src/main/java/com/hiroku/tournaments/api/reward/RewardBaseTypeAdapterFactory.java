@@ -20,6 +20,8 @@ public class RewardBaseTypeAdapterFactory implements TypeAdapterFactory {
     }
 
     public static class RewardBaseTypeAdapter extends TypeAdapter<RewardBase> {
+
+        @Override
         public void write(JsonWriter out, RewardBase value) throws IOException {
             out.beginObject();
             String[] parts = value.getSerializationString().split(":");
@@ -43,6 +45,7 @@ public class RewardBaseTypeAdapterFactory implements TypeAdapterFactory {
             out.endObject();
         }
 
+        @Override
         public RewardBase read(JsonReader in) throws IOException {
             RewardBase rewardBase = null;
             in.beginObject();
