@@ -27,7 +27,7 @@ public class ClausesPropertyMixin {
         } else if (o instanceof Set) {
             return Optional.of(new ClausesValue((Set<BattleClause>)o));
         } else if (o instanceof String) {
-            String[] clauseIDs = ((String) o).replaceAll("[\\[\\]]", "").split(",");
+            String[] clauseIDs = ((String) o).replaceAll("[\\[\\]]", "").split(", ");
             Set<BattleClause> clauses = Sets.newHashSet();
             for (String clauseID : clauseIDs) {
                 clauses.add(BattleClauseRegistry.getClause(clauseID));
