@@ -36,7 +36,7 @@ public class BattleRulesCommand implements Command<CommandSource> {
             return 0;
         }
 
-        Tournament.instance().getRuleSet().br = new BattleRules();
+        Tournament.instance().getRuleSet().battleRules = new BattleRules();
         context.getSource().sendFeedback(Text.of(TextFormatting.GREEN, "Cleared the battle rules."), false);
 
         return 1;
@@ -49,7 +49,7 @@ public class BattleRulesCommand implements Command<CommandSource> {
         }
 
         String args = context.getArgument("args", String.class).replaceAll(",", "\n");
-        Tournament.instance().getRuleSet().br.importText(args);
+        Tournament.instance().getRuleSet().battleRules.importText(args);
         context.getSource().sendFeedback(Text.of(TextFormatting.GREEN, "Imported battle rules text. Use /tournament to check them."), false);
 
         return 1;

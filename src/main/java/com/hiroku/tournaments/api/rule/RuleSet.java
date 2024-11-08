@@ -31,7 +31,7 @@ public class RuleSet {
     /**
      * The Pixelmon battle rules.
      */
-    public BattleRules br = new BattleRules();
+    public BattleRules battleRules = new BattleRules();
     /**
      * The rules contained within this {@link RuleSet}.
      */

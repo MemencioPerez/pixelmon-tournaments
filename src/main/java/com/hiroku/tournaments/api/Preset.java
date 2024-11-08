@@ -45,7 +45,7 @@ public class Preset {
         this.ruleSet = ruleSet;
         this.rewards = rewards;
         this.zones = zones;
-        this.battleRules = ruleSet.br;
+        this.battleRules = ruleSet.battleRules;
     }
 
     public Text getDisplayText() {

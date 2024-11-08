@@ -632,14 +632,14 @@ public class Tournament extends Mode {
 
         Text.Builder brText = Text.builder();
         List<Text> brList = new ArrayList<>();
-        for (Map.Entry<BattleProperty<?>, PropertyValue<?>> entry : PixelmonUtils.getBRProperties(getRuleSet().br).entrySet()) {
+        for (Map.Entry<BattleProperty<?>, PropertyValue<?>> entry : PixelmonUtils.getBRProperties(getRuleSet().battleRules).entrySet()) {
             if (!brList.isEmpty()) {
                 brText.append("\n");
             }
 
             BattleProperty<?> property = entry.getKey();
             if (property instanceof ClausesProperty) {
-                Set<BattleClause> clauses = getRuleSet().br.get((ClausesProperty) property).orElse(Collections.emptySet());
+                Set<BattleClause> clauses = getRuleSet().battleRules.get((ClausesProperty) property).orElse(Collections.emptySet());
                 for (BattleClause clause : clauses) {
                     brList.add(Text.of(TextFormatting.DARK_GREEN, "[C] ", clause.getID(), ": ", TextFormatting.GREEN, clause.getDescription()));
                 }
