@@ -4,15 +4,12 @@ import com.google.common.collect.ImmutableMap;
 import com.hiroku.tournaments.api.Preset;
 import com.hiroku.tournaments.api.rule.RuleSet;
 import com.hiroku.tournaments.util.GsonUtils;
-import com.pixelmonmod.pixelmon.battles.api.rules.clauses.BattleClause;
-import com.pixelmonmod.pixelmon.battles.api.rules.clauses.BattleClauseRegistry;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,13 +70,7 @@ public class Presets {
 				new ArrayList<>()
 		);
 
-		List<BattleClause> standardBattleClauses = new ArrayList<>();
-		standardBattleClauses.add(BattleClauseRegistry.getClause("bag"));
-		standardBattleClauses.add(BattleClauseRegistry.getClause("ohko"));
-		standardBattleClauses.add(BattleClauseRegistry.getClause("batonpass"));
-		standard.ruleSet.br.setNewClauses(standardBattleClauses);
-
-		presets.put("Standard", standard);
+        presets.put("Standard", standard);
 		Tournaments.log("Loaded default preset: Standard");
 		// Add more probably maybe ok unlikely
 
