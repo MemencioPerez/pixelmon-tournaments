@@ -1,16 +1,21 @@
 buildscript {
     repositories {
         maven {
+            url = 'https://repo.spongepowered.org/maven'
+        }
+        maven {
             url = 'https://maven.minecraftforge.net'
         }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.hiroku'
 version = '1.16.5-3.0.6'
@@ -69,9 +74,19 @@ minecraft {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/generated/resources'
+        }
+        ext.refMap = "mixins.tournaments.refmap.json"
+    }
+}
 
 repositories {
+    maven {
+        url = 'https://repo.spongepowered.org/maven'
+    }
     ivy {
         setUrl('https://download.nodecdn.net/containers/reforged/server/release')
         metadataSources {
@@ -87,6 +102,11 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
 
     implementation fg.deobf('pixelmon:Pixelmon-1.16.5-9.1.12-server:9.1.12')
+
+    implementation 'org.spongepowered:mixin:0.8.4-SNAPSHOT'
+    implementation 'org.spongepowered:mixin:0.8.4-SNAPSHOT:processor'
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.4-SNAPSHOT:processor'
 }
 
 jar {
@@ -98,7 +118,10 @@ jar {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Hiroku, happyz",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'TweakOrder': 0,
+                'MixinConfigs' : "mixins.tournaments.json"
         ])
     }
 }

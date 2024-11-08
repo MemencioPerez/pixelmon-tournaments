@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.7.10",
+  "package": "com.hiroku.tournaments.mixins",
+  "refmap": "mixins.tournaments.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BattleClauseMixin",
+    "BattleRulesMixin",
+    "ClausesPropertyMixin"
+  ],
+  "client": []
+}
