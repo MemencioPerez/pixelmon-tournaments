@@ -24,9 +24,23 @@ public class RewardBaseTypeAdapterFactory implements TypeAdapterFactory {
             out.beginObject();
             System.out.println(value.getSerializationString());
             String[] parts = value.getSerializationString().split(":");
-            String ruleName = parts[0];
-            String ruleValue = parts[1];
-            out.name(ruleName).value(ruleValue);
+            String rewardId = parts[0];
+            String rewardValue;
+
+            if (parts.length >= 3) {
+                StringBuilder builder = new StringBuilder();
+                for (int i = 1; i < parts.length; i++) {
+                    builder.append(parts[i]);
+                    if (i < parts.length - 1) {
+                        builder.append(":");
+                    }
+                }
+                rewardValue = builder.toString();
+            } else {
+                rewardValue = parts[1];
+            }
+
+            out.name(rewardId).value(rewardValue);
             out.endObject();
         }
 
@@ -36,9 +50,9 @@ public class RewardBaseTypeAdapterFactory implements TypeAdapterFactory {
 
             while(in.hasNext()) {
                 try {
-                    String ruleName = in.nextName();
-                    String ruleValue = in.nextString();
-                    rewardBase = RewardTypeRegistrar.parse(ruleName, ruleValue);
+                    String rewardId = in.nextName();
+                    String rewardValue = in.nextString();
+                    rewardBase = RewardTypeRegistrar.parse(rewardId, rewardValue);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
