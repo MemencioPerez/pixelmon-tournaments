@@ -69,6 +69,8 @@ public class Preset {
     }
 
     public static class Serializer implements JsonSerializer<Preset> {
+
+        @Override
         public JsonElement serialize(Preset src, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.add("ruleSet", context.serialize(src.ruleSet));
@@ -86,6 +88,8 @@ public class Preset {
     }
 
     public static class Deserializer implements JsonDeserializer<Preset> {
+
+        @Override
         public Preset deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
             JsonObject jsonObject = json.getAsJsonObject();
             RuleSet ruleSet = context.deserialize(jsonObject.get("ruleSet"), RuleSet.class);
