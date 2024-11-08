@@ -1,6 +1,9 @@
 package com.hiroku.tournaments.api;
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import com.happyzleaf.tournaments.text.Text;
+import com.hiroku.tournaments.Zones;
 import com.hiroku.tournaments.api.reward.RewardBase;
 import com.hiroku.tournaments.api.rule.RuleSet;
 import com.hiroku.tournaments.obj.Zone;
@@ -10,6 +13,8 @@ import com.pixelmonmod.pixelmon.battles.api.rules.BattleRules;
 import com.pixelmonmod.pixelmon.battles.api.rules.PropertyValue;
 import net.minecraft.util.text.TextFormatting;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,5 +66,39 @@ public class Preset {
         }
 
         return builder.build();
+    }
+
+    public static class Serializer implements JsonSerializer<Preset> {
+        public JsonElement serialize(Preset src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("ruleSet", context.serialize(src.ruleSet));
+            jsonObject.add("rewards", context.serialize(src.rewards));
+            JsonArray zoneIds = new JsonArray();
+            if (src.zones != null) {
+                for (Zone zone : src.zones) {
+                    zoneIds.add(new JsonPrimitive(zone.uid));
+                }
+            }
+
+            jsonObject.add("zones", zoneIds);
+            return jsonObject;
+        }
+    }
+
+    public static class Deserializer implements JsonDeserializer<Preset> {
+        public Preset deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+            JsonObject jsonObject = json.getAsJsonObject();
+            RuleSet ruleSet = context.deserialize(jsonObject.get("ruleSet"), RuleSet.class);
+            List<RewardBase> rewards = context.deserialize(jsonObject.get("rewards"), (new TypeToken<List<RewardBase>>() {}).getType());
+            List<Zone> zones = new ArrayList<>();
+            JsonArray zoneUIDsArray = jsonObject.get("zones").getAsJsonArray();
+            if (zoneUIDsArray != null) {
+                for (JsonElement jsonElement : zoneUIDsArray) {
+                    zones.add(Zones.INSTANCE.getZone(jsonElement.getAsInt()));
+                }
+            }
+
+            return new Preset(ruleSet, rewards, zones);
+        }
     }
 }
