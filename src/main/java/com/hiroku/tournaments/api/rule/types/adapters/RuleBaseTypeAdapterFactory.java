@@ -24,7 +24,21 @@ public class RuleBaseTypeAdapterFactory implements TypeAdapterFactory {
             out.beginObject();
             String[] parts = value.getSerializationString().split(":");
             String ruleName = parts[0];
-            String ruleValue = parts[1];
+            String ruleValue;
+
+            if (parts.length >= 3) {
+                StringBuilder builder = new StringBuilder();
+                for (int i = 1; i < parts.length; i++) {
+                    builder.append(parts[i]);
+                    if (i < parts.length - 1) {
+                        builder.append(":");
+                    }
+                }
+                ruleValue = builder.toString();
+            } else {
+                ruleValue = parts[1];
+            }
+
             out.name(ruleName).value(ruleValue);
             out.endObject();
         }
