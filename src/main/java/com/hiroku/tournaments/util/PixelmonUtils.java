@@ -23,21 +23,4 @@ public class PixelmonUtils {
             throw new RuntimeException(e);
         }
     }
-
-    /**
-     * Bug fix for weird pixelmon regression in {@link BattleRules#exportText()}
-     * @param br The {@link BattleRules} to export.
-     * @return The exported {@link BattleRules} as {@link String}.
-     */
-    public static String exportBRText(BattleRules br) {
-        StringBuilder builder = new StringBuilder();
-        for (Map.Entry<BattleProperty<?>, PropertyValue<?>> entry : getBRProperties(br).entrySet()) {
-            if (builder.length() != 0) {
-                builder.append("\n");
-            }
-
-            builder.append(entry.getKey().getId()).append(": ").append(entry.getValue().get());
-        }
-        return builder.toString();
-    }
 }
