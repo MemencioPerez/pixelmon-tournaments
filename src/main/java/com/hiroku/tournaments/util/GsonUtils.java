@@ -4,9 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hiroku.tournaments.api.Preset;
 import com.hiroku.tournaments.api.reward.RewardBaseTypeAdapterFactory;
-import com.hiroku.tournaments.api.rule.types.RuleBase;
 import com.hiroku.tournaments.api.rule.types.adapters.BattleRulesTypeAdapter;
-import com.hiroku.tournaments.api.rule.types.adapters.RuleBaseTypeAdapter;
+import com.hiroku.tournaments.api.rule.types.adapters.RuleBaseTypeAdapterFactory;
 import com.pixelmonmod.pixelmon.battles.api.rules.BattleRules;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -22,7 +21,7 @@ public class GsonUtils {
 	 */
 	public static final Gson prettyGson = new GsonBuilder().setPrettyPrinting()
 			.registerTypeAdapter(BattleRules.class, new BattleRulesTypeAdapter())
-			.registerTypeAdapter(RuleBase.class, new RuleBaseTypeAdapter())
+			.registerTypeAdapterFactory(new RuleBaseTypeAdapterFactory())
 			.registerTypeAdapterFactory(new RewardBaseTypeAdapterFactory())
 			.registerTypeAdapter(Preset.class, new Preset.Serializer())
 			.registerTypeAdapter(Preset.class, new Preset.Deserializer())
