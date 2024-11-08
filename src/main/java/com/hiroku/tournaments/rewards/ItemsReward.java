@@ -45,8 +45,10 @@ public class ItemsReward extends RewardBase {
 				throw new Exception("Invalid player name: " + arg);
 			}
 		} else {
-			for (ItemStack is : items) {
-				TournamentUtils.giveItemsToPlayer(player, is.copy());
+			for (ItemStack stack : player.inventory.mainInventory) {
+				if (!stack.isEmpty()) {
+					items.add(stack.copy());
+				}
 			}
 		}
 
