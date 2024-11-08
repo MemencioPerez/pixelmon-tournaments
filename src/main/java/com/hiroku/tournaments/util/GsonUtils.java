@@ -3,8 +3,7 @@ package com.hiroku.tournaments.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hiroku.tournaments.api.Preset;
-import com.hiroku.tournaments.api.reward.RewardBase;
-import com.hiroku.tournaments.api.reward.RewardBaseTypeAdapter;
+import com.hiroku.tournaments.api.reward.RewardBaseTypeAdapterFactory;
 import com.hiroku.tournaments.api.rule.types.RuleBase;
 import com.hiroku.tournaments.api.rule.types.adapters.BattleRulesTypeAdapter;
 import com.hiroku.tournaments.api.rule.types.adapters.RuleBaseTypeAdapter;
@@ -24,7 +23,7 @@ public class GsonUtils {
 	public static final Gson prettyGson = new GsonBuilder().setPrettyPrinting()
 			.registerTypeAdapter(BattleRules.class, new BattleRulesTypeAdapter())
 			.registerTypeAdapter(RuleBase.class, new RuleBaseTypeAdapter())
-			.registerTypeAdapter(RewardBase.class, new RewardBaseTypeAdapter())
+			.registerTypeAdapterFactory(new RewardBaseTypeAdapterFactory())
 			.registerTypeAdapter(Preset.class, new Preset.Serializer())
 			.registerTypeAdapter(Preset.class, new Preset.Deserializer())
 			.create();
