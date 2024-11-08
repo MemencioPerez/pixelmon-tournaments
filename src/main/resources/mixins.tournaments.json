@@ -8,7 +8,8 @@
   "mixins": [
     "BattleClauseMixin",
     "BattleRulesMixin",
-    "ClausesPropertyMixin"
+    "ClausesPropertyMixin",
+    "TierPropertyMixin"
   ],
   "client": []
 }
