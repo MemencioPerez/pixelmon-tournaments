@@ -22,7 +22,6 @@ public class RewardBaseTypeAdapterFactory implements TypeAdapterFactory {
     public static class RewardBaseTypeAdapter extends TypeAdapter<RewardBase> {
         public void write(JsonWriter out, RewardBase value) throws IOException {
             out.beginObject();
-            System.out.println(value.getSerializationString());
             String[] parts = value.getSerializationString().split(":");
             String rewardId = parts[0];
             String rewardValue;
