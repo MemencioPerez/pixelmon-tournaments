@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.7.38'
     }
 }
 
@@ -103,10 +103,10 @@ dependencies {
 
     implementation fg.deobf('pixelmon:Pixelmon-1.16.5-9.1.12-server:9.1.12')
 
-    implementation 'org.spongepowered:mixin:0.8.4-SNAPSHOT'
-    implementation 'org.spongepowered:mixin:0.8.4-SNAPSHOT:processor'
+    implementation 'org.spongepowered:mixin:0.8.7'
+    implementation 'org.spongepowered:mixin:0.8.7:processor'
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.4-SNAPSHOT:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
 }
 
 jar {
