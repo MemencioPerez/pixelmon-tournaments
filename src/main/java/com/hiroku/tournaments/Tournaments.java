@@ -1,5 +1,6 @@
 package com.hiroku.tournaments;
 
+import com.envyful.papi.api.PlaceholderFactory;
 import com.happyzleaf.tournaments.text.TextAction;
 import com.hiroku.tournaments.api.requirements.RentalRequirement;
 import com.hiroku.tournaments.api.reward.RewardTypeRegistrar;
@@ -9,6 +10,7 @@ import com.hiroku.tournaments.commands.TournamentCommand;
 import com.hiroku.tournaments.commands.elo.EloCommand;
 import com.hiroku.tournaments.config.TournamentConfig;
 import com.hiroku.tournaments.elo.EloStorage;
+import com.hiroku.tournaments.elo.placeholder.EloPlaceholderManager;
 import com.hiroku.tournaments.listeners.*;
 import com.hiroku.tournaments.rewards.CommandReward;
 import com.hiroku.tournaments.rewards.ItemsReward;
@@ -102,9 +104,11 @@ public class Tournaments {
 			log("WARNING: force-end-battle-result in pixelmon.hocon should be set to ABNORMAL. Ending bugged tournament battles will not go well!");
 		}
 
-		// TODO: placeholder?
-//		if (Sponge.getPluginManager().isLoaded("placeholderapi"))
-//			EloPlaceholder.addPlaceholder();
+		try {
+			Class.forName("com.envyful.papi.forge.ForgePlaceholderAPI");
+			PlaceholderFactory.register(new EloPlaceholderManager());
+		} catch (ClassNotFoundException ignored) {
+		}
 
 		PokemonSpecificationProxy.register(new RentalRequirement());
 	}

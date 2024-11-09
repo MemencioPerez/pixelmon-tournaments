@@ -87,6 +87,9 @@ repositories {
     maven {
         url = 'https://repo.spongepowered.org/maven'
     }
+    maven {
+        url = 'https://jitpack.io'
+    }
     ivy {
         setUrl('https://download.nodecdn.net/containers/reforged/server/release')
         metadataSources {
@@ -107,6 +110,8 @@ dependencies {
     implementation 'org.spongepowered:mixin:0.8.7:processor'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+
+    compileOnly 'com.github.Pixelmon-Development.ForgePlaceholderAPI:api:2.0.4'
 }
 
 jar {
