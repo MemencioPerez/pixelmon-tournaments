@@ -30,7 +30,7 @@ public class RewardsCommand implements Command<CommandSource> {
                 .executes(this)
                 .then(
                         Commands.literal("add")
-                                .requires(source -> User.hasPermission(source, "tournaments.command.common.rewards"))
+                                .requires(source -> User.hasPermission(source, "tournaments.command.admin.rewards"))
                                 .then(
                                         Commands.argument("reward", StringArgumentType.greedyString())
                                                 .executes(this::add)
@@ -38,7 +38,7 @@ public class RewardsCommand implements Command<CommandSource> {
                 )
                 .then(
                         Commands.literal("remove")
-                                .requires(source -> User.hasPermission(source, "tournaments.command.common.rewards"))
+                                .requires(source -> User.hasPermission(source, "tournaments.command.admin.rewards"))
                                 .then(
                                         Commands.argument("reward", StringArgumentType.greedyString())
                                                 .executes(this::remove)
@@ -46,7 +46,7 @@ public class RewardsCommand implements Command<CommandSource> {
                 )
                 .then(
                         Commands.literal("test")
-                                .requires(source -> User.hasPermission(source, "tournaments.command.common.rewards"))
+                                .requires(source -> User.hasPermission(source, "tournaments.command.admin.rewards"))
                                 .executes(this::test)
                                 .then(
                                         Commands.argument("player", EntityArgument.player())
