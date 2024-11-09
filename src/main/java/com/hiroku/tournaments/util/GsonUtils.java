@@ -6,6 +6,8 @@ import com.hiroku.tournaments.api.Preset;
 import com.hiroku.tournaments.api.reward.RewardBaseTypeAdapterFactory;
 import com.hiroku.tournaments.api.rule.types.adapters.BattleRulesTypeAdapter;
 import com.hiroku.tournaments.api.rule.types.adapters.RuleBaseTypeAdapterFactory;
+import com.hiroku.tournaments.obj.LocationWrapper;
+import com.hiroku.tournaments.obj.LocationWrapperTypeAdapter;
 import com.pixelmonmod.pixelmon.battles.api.rules.BattleRules;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -25,6 +27,7 @@ public class GsonUtils {
 			.registerTypeAdapterFactory(new RewardBaseTypeAdapterFactory())
 			.registerTypeAdapter(Preset.class, new Preset.Serializer())
 			.registerTypeAdapter(Preset.class, new Preset.Deserializer())
+			.registerTypeAdapter(LocationWrapper.class, new LocationWrapperTypeAdapter())
 			.create();
 	/**
 	 * The JSON writing/reading object with ordinary printing.

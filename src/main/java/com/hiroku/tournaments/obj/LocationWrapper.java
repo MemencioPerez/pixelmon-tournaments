@@ -16,6 +16,12 @@ public class LocationWrapper {
 	public final Vector3d position;
 	public final Vector2f rotation;
 
+	public LocationWrapper(RegistryKey<World> dimensionKey, Vector3d position, Vector2f rotation) {
+		this.dimensionKey = dimensionKey;
+		this.position = position;
+		this.rotation = rotation;
+	}
+
 	public LocationWrapper(World world, Vector3d position, Vector2f rotation) {
 		this.dimensionKey = world == null ? null : world.getDimensionKey();
 		this.position = position;
@@ -24,10 +30,6 @@ public class LocationWrapper {
 
 	public LocationWrapper(Entity at) {
 		this(checkNotNull(at, "at").getEntityWorld(), at.getPositionVec(), at.getPitchYaw());
-	}
-
-	public LocationWrapper() {
-		this(null, null, null);
 	}
 
 	public void sendPlayer(PlayerEntity player) {
