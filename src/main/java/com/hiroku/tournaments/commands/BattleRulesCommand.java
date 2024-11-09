@@ -48,9 +48,34 @@ public class BattleRulesCommand implements Command<CommandSource> {
             return 0;
         }
 
-        String args = context.getArgument("args", String.class).replaceAll(",", "\n");
-        Tournament.instance().getRuleSet().battleRules.importText(args);
-        context.getSource().sendFeedback(Text.of(TextFormatting.GREEN, "Imported battle rules text. Use /tournament to check them."), false);
+        String args = context.getArgument("args", String.class);
+
+        String[] argsSplit = args.split("[\\[\\]]");
+
+        if (args.length() >= 2) {
+            StringBuilder builder = new StringBuilder()
+                    .append(argsSplit[0]
+                            .replaceAll(",\\s?", "\n")
+                            .replaceAll(":\\s?", ": "))
+                    .append("[")
+                    .append(argsSplit[1]
+                            .replaceAll(",\\s?", ", "));
+            if (args.length() == 3) {
+                builder.append(argsSplit[2]
+                        .replaceAll(",\\s?", "\n")
+                        .replaceAll(":\\s?", ": "));
+            }
+            builder.append("]");
+            args = builder.toString();
+        }
+
+        try {
+            Tournament.instance().getRuleSet().battleRules.importText(args);
+            context.getSource().sendFeedback(Text.of(TextFormatting.GREEN, "Imported battle rules text. Use /tournament to check them."), false);
+        } catch (Exception e) {
+            context.getSource().sendFeedback(Text.of(TextFormatting.RED, "Invalid battle rules text. Check your battle rules text and try again."), false);
+            e.printStackTrace();
+        }
 
         return 1;
     }
