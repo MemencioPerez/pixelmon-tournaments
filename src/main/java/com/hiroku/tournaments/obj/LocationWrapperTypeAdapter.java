@@ -22,19 +22,19 @@ public class LocationWrapperTypeAdapter extends TypeAdapter<LocationWrapper> {
         out.name("dimension").value(location.getNamespace() + ":" + location.getPath());
 
         out.name("position");
-        out.beginObject();
+        out.beginArray();
         Vector3d position = value.position;
         out.name("x").value(position.x);
         out.name("y").value(position.y);
         out.name("z").value(position.z);
-        out.endObject();
+        out.endArray();
 
         out.name("position");
-        out.beginObject();
+        out.beginArray();
         Vector2f rotation = value.rotation;
         out.name("pitch").value(rotation.x);
         out.name("yaw").value(rotation.y);
-        out.endObject();
+        out.endArray();
 
         out.endObject();
     }
@@ -56,7 +56,7 @@ public class LocationWrapperTypeAdapter extends TypeAdapter<LocationWrapper> {
                     dimensionKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, location);
                     break;
                 case "position":
-                    in.beginObject();
+                    in.beginArray();
                     double x = 0, y = 0, z = 0;
                     if (in.hasNext()) {
                         x = in.nextDouble();
@@ -68,10 +68,10 @@ public class LocationWrapperTypeAdapter extends TypeAdapter<LocationWrapper> {
                         z = in.nextDouble();
                     }
                     position = new Vector3d(x, y, z);
-                    in.endObject();
+                    in.endArray();
                     break;
                 case "rotation":
-                    in.beginObject();
+                    in.beginArray();
                     float pitch = 0, yaw = 0;
                     if (in.hasNext()) {
                         pitch = (float) in.nextDouble();
@@ -80,7 +80,7 @@ public class LocationWrapperTypeAdapter extends TypeAdapter<LocationWrapper> {
                         yaw = (float) in.nextDouble();
                     }
                     rotation = new Vector2f(pitch, yaw);
-                    in.endObject();
+                    in.endArray();
                     break;
                 default:
                     in.skipValue();
