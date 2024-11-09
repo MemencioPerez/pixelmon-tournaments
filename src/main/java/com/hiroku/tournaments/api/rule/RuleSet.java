@@ -98,7 +98,7 @@ public class RuleSet {
     public void removeRule(RuleBase rule) {
         boolean canRemove = true;
         for (Mode mode : Tournament.instance().getModes())
-            if (!mode.canRuleBeRemoved(Tournament.instance(), rule))
+            if (mode.canRuleBeRemoved(Tournament.instance(), rule))
                 canRemove = false;
         if (canRemove)
             rules.remove(rule);
@@ -155,7 +155,7 @@ public class RuleSet {
         for (RuleBase rule : matchingRules) {
             boolean canRemove = true;
             for (Mode mode : Tournament.instance().getModes()) {
-                if (!mode.canRuleBeRemoved(Tournament.instance(), rule)) {
+                if (mode.canRuleBeRemoved(Tournament.instance(), rule)) {
                     canRemove = false;
                 }
             }

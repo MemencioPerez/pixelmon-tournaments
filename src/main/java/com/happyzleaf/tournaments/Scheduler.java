@@ -25,8 +25,8 @@ public class Scheduler {
 		return delay(unit.toSeconds(time) * 20, task);
 	}
 
-	public static boolean cancel(UUID id) {
-		return tickers.remove(id) != null;
+	public static void cancel(UUID id) {
+		tickers.remove(id);
 	}
 
 	private static class Ticker implements Runnable {

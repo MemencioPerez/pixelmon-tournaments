@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.hiroku.tournaments.util.GsonUtils;
 
 import java.io.*;
+import java.nio.file.Files;
 
 /**
  * JSON object for storing all configurable elements for tournaments
@@ -56,7 +57,7 @@ public class TournamentConfig {
 		if (!file.exists())
 			INSTANCE.save();
 		else {
-			try (InputStreamReader isr = new InputStreamReader(new FileInputStream(file), Charsets.UTF_8)) {
+			try (InputStreamReader isr = new InputStreamReader(Files.newInputStream(file.toPath()), Charsets.UTF_8)) {
 				INSTANCE = GsonUtils.prettyGson.fromJson(isr, TournamentConfig.class);
 				isr.close();
 				// Save for when new options have been added
@@ -69,7 +70,7 @@ public class TournamentConfig {
 
 	public void save() {
 		File file = new File(PATH);
-		try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8)) {
+		try (OutputStreamWriter osw = new OutputStreamWriter(Files.newOutputStream(file.toPath()), Charsets.UTF_8)) {
 			String json = GsonUtils.prettyGson.toJson(this);
 			osw.write(json);
 			osw.flush();

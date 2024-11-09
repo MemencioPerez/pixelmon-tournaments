@@ -30,7 +30,7 @@ public class ReloadCommand implements Command<CommandSource> {
 	}
 
 	@Override
-	public int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
+	public int run(CommandContext<CommandSource> context) {
 		context.getSource().sendFeedback(Text.of(TextFormatting.GRAY, "Beginning reload..."), false);
 
 		TournamentUtils.createDir("config/tournaments");

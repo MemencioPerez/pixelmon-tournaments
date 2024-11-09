@@ -32,7 +32,7 @@ public class CreateCommand implements Command<CommandSource> {
 	}
 
 	@Override
-	public int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
+	public int run(CommandContext<CommandSource> context) {
 		if (Tournament.instance() != null && Tournament.instance().state != TournamentStates.CLOSED) {
 			if (Tournament.instance().state == TournamentStates.ACTIVE) {
 				context.getSource().sendFeedback(Text.of(TextFormatting.RED, "There is a tournament that's ACTIVE man"), false);

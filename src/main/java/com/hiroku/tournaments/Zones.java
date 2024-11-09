@@ -137,7 +137,7 @@ public class Zones {
 				INSTANCE = GsonUtils.prettyGson.fromJson(br, Zones.class);
 				br.close();
 			} else {
-				file.createNewFile();
+				Files.createFile(file.toPath());
 				INSTANCE.save();
 			}
 		} catch (Exception e) {

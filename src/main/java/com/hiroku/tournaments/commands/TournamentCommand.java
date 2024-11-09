@@ -56,7 +56,7 @@ public class TournamentCommand implements Command<CommandSource> {
     }
 
     @Override
-    public int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    public int run(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament"), false);
             return 0;
@@ -66,7 +66,7 @@ public class TournamentCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int open(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int open(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "There is no tournament to open. Try /tournament create"), false);
             return 0;
@@ -82,7 +82,7 @@ public class TournamentCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int close(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int close(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "It's a tad difficult to close a tournament that doesn't exist"), false);
             return 0;
@@ -101,7 +101,7 @@ public class TournamentCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int start(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int start(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null || Tournament.instance().state == TournamentStates.CLOSED) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "There is no open tournament to start. Have you tried /tournament open?"), false);
             return 0;

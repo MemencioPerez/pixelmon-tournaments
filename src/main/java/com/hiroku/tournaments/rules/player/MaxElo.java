@@ -57,7 +57,7 @@ public class MaxElo extends PlayerRule {
 		EloTypes eloType = Tournament.instance().getRuleSet().getRule(EloType.class).type;
 		for (UUID uuid : team.getUserIDs()) {
 			if (EloStorage.getElo(uuid, eloType) > maxElo) {
-				if (CollectionHelper.find(team.users, user -> user.id.equals(uuid)).hasPermission("tournaments.admin.elo-bypass"))
+				if (CollectionHelper.find(team.users, user -> user.id.equals(uuid) && user.hasPermission("tournaments.admin.elo-bypass")) != null)
 					continue;
 
 				if (CollectionHelper.find(team.users, user -> user.hasPermission("tournaments.admin.elo-bypass-team")) != null)
@@ -66,9 +66,14 @@ public class MaxElo extends PlayerRule {
 				if (!forced) {
 					if (team.users.size() == 1)
 						team.sendMessage(Text.of(TextFormatting.RED, "Your Elo is too high to join this tournament. Maximum: " + maxElo));
-					else
-						team.sendMessage(Text.of(TextFormatting.DARK_AQUA, CollectionHelper.find(team.users, u -> u.id.equals(uuid)).getName(),
-								TextFormatting.RED, " has an Elo that is too high to join this tournament. Maximum: " + maxElo));
+					else {
+						User user = CollectionHelper.find(team.users, u -> u.id.equals(uuid));
+						if (user != null) {
+							team.sendMessage(Text.of(TextFormatting.DARK_AQUA, user.getName(),
+									TextFormatting.RED, " has an Elo that is too high to join this tournament. Maximum: " + maxElo));
+						}
+					}
+
 				}
 				return false;
 			}

@@ -30,7 +30,7 @@ public class EloStorage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (INSTANCE == null || INSTANCE.data == null) {
+			if (INSTANCE == null) {
 				INSTANCE = new EloStorage();
 				Tournaments.log("Loaded new Elo storage");
 				save();

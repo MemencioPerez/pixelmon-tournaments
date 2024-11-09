@@ -9,6 +9,8 @@ import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class LocationWrapper {
@@ -39,12 +41,15 @@ public class LocationWrapper {
 			return;
 		}
 
-		if (!player.getEntityWorld().getDimensionKey().equals(this.dimensionKey)) {
-			player.setWorld(player.getServer().getWorld(this.dimensionKey));
-		}
+		if (player.getServer() != null) {
+			if (!player.getEntityWorld().getDimensionKey().equals(this.dimensionKey)) {
+				Optional<World> world = Optional.ofNullable(player.getServer().getWorld(this.dimensionKey));
+                world.ifPresent(player::setWorld);
+			}
 
-		Vector3d position = this.position == null ? player.getPositionVec() : this.position;
-		Vector2f rotation = this.rotation == null ? player.getPitchYaw() : this.rotation;
-		player.setLocationAndAngles(position.getX(), position.getY(), position.getZ(), rotation.x, rotation.y);
+			Vector3d position = this.position == null ? player.getPositionVec() : this.position;
+			Vector2f rotation = this.rotation == null ? player.getPitchYaw() : this.rotation;
+			player.setLocationAndAngles(position.getX(), position.getY(), position.getZ(), rotation.x, rotation.y);
+		}
 	}
 }

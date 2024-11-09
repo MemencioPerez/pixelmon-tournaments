@@ -84,10 +84,10 @@ public class RandomPokemon extends PlayerRule {
         if (Tournament.instance() != null) {
             Tiers rule = Tournament.instance().getRuleSet().getRule(Tiers.class);
             if (rule == null && !tiers.isEmpty()) {
-                String classesStr = tiers.get(0).key;
+                StringBuilder classesStr = new StringBuilder(tiers.get(0).key);
                 for (int i = 1; i < tiers.size(); i++)
-                    classesStr += "," + tiers.get(i).key;
-                Tournament.instance().getRuleSet().addRule(new Tiers(classesStr));
+                    classesStr.append(",").append(tiers.get(i).key);
+                Tournament.instance().getRuleSet().addRule(new Tiers(classesStr.toString()));
             }
         }
     }
@@ -119,7 +119,7 @@ public class RandomPokemon extends PlayerRule {
         if (this.rentalOnly)
             line.append(",rentalonly");
         String specString = spec.toString();
-        if (!specString.equals(""))
+        if (!specString.isEmpty())
             line.append(",").append(specString);
         for (Tier tier : tiers)
             line.append(",").append(tier.key);

@@ -17,10 +17,8 @@ public abstract class RuleBase extends Mode {
 	 * Construction of the implementation's {@link RuleBase} potentially based off a parameter on the right of the colon (eg. levelmax:50).
 	 *
 	 * @param arg - The optional argument on the right side of the colon (in the above example, 50 as a string).
-	 * @throws Exception Whenever there is some kind of failure in the argument. The exception message will be given to the user
-	 *                   adding the rule.
-	 */
-	RuleBase(String arg) throws Exception {
+     */
+	RuleBase(String arg) {
 	}
 
 	/**

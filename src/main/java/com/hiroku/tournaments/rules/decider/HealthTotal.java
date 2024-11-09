@@ -22,7 +22,7 @@ public class HealthTotal extends DeciderRule {
 	public HealthTotal(String arg) throws Exception {
 		super(arg);
 
-		if (!arg.equals(""))
+		if (!arg.isEmpty())
 			this.weight = Integer.parseInt(arg);
 	}
 

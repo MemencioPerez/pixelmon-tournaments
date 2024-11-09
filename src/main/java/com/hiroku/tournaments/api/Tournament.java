@@ -159,7 +159,7 @@ public class Tournament extends Mode {
      * Sends the given {@link Text} to all players that aren't ignoring the tournament.
      */
     public void sendMessage(Text text) {
-        if (text == null || text.toPlain().equals("")) {
+        if (text == null || text.toPlain().isEmpty()) {
             return;
         }
 
@@ -478,7 +478,7 @@ public class Tournament extends Mode {
             }
         }
 
-        if (teams.size() == 1 && matches.size() > 0)
+        if (teams.size() == 1 && !matches.isEmpty())
             for (User user : teams.get(0).users)
                 if (user.isOnline())
                     if (getMessageProvider().getByeMessage() != null)
@@ -497,7 +497,7 @@ public class Tournament extends Mode {
         List<Match> waitingMatches = new ArrayList<>(round);
         waitingMatches.removeIf(match -> match.matchActive);
 
-        boolean matchExists = waitingMatches.size() > 0;
+        boolean matchExists = !waitingMatches.isEmpty();
 
         for (Match match : waitingMatches) {
             Zone zone = Zones.INSTANCE.getFreeZone();
@@ -569,8 +569,7 @@ public class Tournament extends Mode {
 
         List<User> winnerUsers = new ArrayList<>();
         for (Team team : winners)
-            for (User user : team.users)
-                winnerUsers.add(user);
+            winnerUsers.addAll(team.users);
 
         Tournaments.EVENT_BUS.post(new TournamentEndEvent(winnerUsers));
         getModes().forEach(mode -> mode.onTournamentEnd(this, winnerUsers));
@@ -701,10 +700,8 @@ public class Tournament extends Mode {
                             }
 
                             List<Team> orderedTeams = new ArrayList<>();
-                            for (Team team : liveTeams)
-                                orderedTeams.add(team);
-                            for (Team team : deadTeams)
-                                orderedTeams.add(team);
+                            orderedTeams.addAll(liveTeams);
+                            orderedTeams.addAll(deadTeams);
 
                             for (Team team : orderedTeams) {
                                 if (team.alive)

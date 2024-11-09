@@ -108,7 +108,7 @@ public abstract class Mode {
 	 * @return - <code>true</code> if the rule may be removed (default), <code>false</code> if the rule can be removed.
 	 */
 	public boolean canRuleBeRemoved(Tournament tournament, RuleBase rule) {
-		return true;
+		return false;
 	}
 
 	/**

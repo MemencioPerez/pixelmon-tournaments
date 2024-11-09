@@ -28,7 +28,7 @@ public class SetParty extends GeneralRule {
 	public SetParty(String arg) throws Exception {
 		super(arg);
 
-		if (!arg.equals("")) {
+		if (!arg.isEmpty()) {
 			specificLevel = Integer.parseInt(arg);
 			if (specificLevel < 1 || specificLevel > 100)
 				throw new Exception("Invalid level: " + arg);
@@ -125,7 +125,7 @@ public class SetParty extends GeneralRule {
 
 	@Override
 	public boolean canRuleBeRemoved(Tournament tournament, RuleBase rule) {
-		return !(rule instanceof LevelMax) || specificLevel != -1;
+		return rule instanceof LevelMax && specificLevel == -1;
 	}
 
 	public static void restoreLevels(User user) {

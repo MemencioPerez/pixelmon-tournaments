@@ -29,7 +29,7 @@ public class BattleRulesCommand implements Command<CommandSource> {
     }
 
     @Override
-    public int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    public int run(CommandContext<CommandSource> context) {
         // Clear
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament to set battle rules for. Try /tournament create"), false);
@@ -42,7 +42,7 @@ public class BattleRulesCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int load(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int load(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament to set battle rules for. Try /tournament create"), false);
             return 0;

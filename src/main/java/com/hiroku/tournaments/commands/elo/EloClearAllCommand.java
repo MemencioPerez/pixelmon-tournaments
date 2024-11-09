@@ -26,7 +26,7 @@ public class EloClearAllCommand implements Command<CommandSource> {
 	}
 
 	@Override
-	public int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
+	public int run(CommandContext<CommandSource> context) {
 		EloTypes type = context.getArgument("type", EloTypes.class);
 		EloStorage.clearAllElos(type);
 		context.getSource().sendFeedback(Text.of(TextFormatting.DARK_GREEN, "Wiped all ", type == null ? "" : (type + " "), "Elo ratings."), false);

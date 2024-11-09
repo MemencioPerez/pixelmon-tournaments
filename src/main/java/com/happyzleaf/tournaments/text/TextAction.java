@@ -59,7 +59,7 @@ public class TextAction {
     }
 
     public interface Callback {
-        void run(PlayerEntity src, Controller ctx) throws CommandSyntaxException;
+        void run(PlayerEntity src, Controller ctx);
     }
 
     public static class Controller {

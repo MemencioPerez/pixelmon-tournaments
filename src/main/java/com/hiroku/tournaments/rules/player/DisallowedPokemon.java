@@ -47,9 +47,9 @@ public class DisallowedPokemon extends PlayerRule {
 	public Text getDisplayText() {
 		Text.Builder builder = Text.builder();
 
-		if (pokemons.size() > 0)
+		if (!pokemons.isEmpty())
 			builder.append(Text.of(TextFormatting.DARK_AQUA, pokemons.get(0)));
-		if (tiers.size() > 0)
+		if (!tiers.isEmpty())
 			if (pokemons.isEmpty())
 				builder.append(Text.of(TextFormatting.DARK_AQUA, tiers.get(0).key));
 			else

@@ -18,7 +18,7 @@ public class CommandReward extends RewardBase {
 	public CommandReward(String arg) throws Exception {
 		super(arg);
 
-		if (arg.trim().equals(""))
+		if (arg.trim().isEmpty())
 			throw new IllegalArgumentException("Missing arguments: text and command");
 
 		if (arg.contains("text:")) {
@@ -28,7 +28,7 @@ public class CommandReward extends RewardBase {
 		if (arg.contains("cmd:"))
 			command = arg.substring(arg.indexOf("cmd:") + 4).split(";")[0];
 
-		if (command.equals(""))
+		if (command.isEmpty())
 			throw new IllegalArgumentException("Missing argument: cmd");
 	}
 
@@ -53,6 +53,6 @@ public class CommandReward extends RewardBase {
 
 	@Override
 	public boolean visibleToAll() {
-		return !displayText.toPlain().equals("");
+		return !displayText.toPlain().isEmpty();
 	}
 }

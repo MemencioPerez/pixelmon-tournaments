@@ -39,7 +39,7 @@ public class EloListCommand implements Command<CommandSource> {
 	}
 
 	@Override
-	public int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
+	public int run(CommandContext<CommandSource> context) {
 		int x = getOptArgument(context, "number", int.class).orElse(TournamentConfig.INSTANCE.defaultEloTopNumber);
 		EloTypes type = getOptArgument(context, "type", EloTypes.class).orElse(null);
 

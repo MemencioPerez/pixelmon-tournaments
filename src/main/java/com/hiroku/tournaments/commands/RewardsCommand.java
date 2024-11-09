@@ -72,7 +72,7 @@ public class RewardsCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int add(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int add(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament to change rewards for. Try /tournament create"), false);
             return 0;
@@ -93,7 +93,7 @@ public class RewardsCommand implements Command<CommandSource> {
         }
     }
 
-    private int remove(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int remove(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament to change rewards for. Try /tournament create"), false);
             return 0;

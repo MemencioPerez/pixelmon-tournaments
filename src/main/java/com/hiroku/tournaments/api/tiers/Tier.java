@@ -69,7 +69,7 @@ public class Tier {
 	/**
 	 * Little cup - not-evolved, but able to evolve. e.g. Bulbasaur is acceptable, Pachirisu is not
 	 */
-	public static final Tier LC = new Tier("LC", "Little Cup", p -> !p.getForm().getEvolutions().isEmpty() && p.getForm().getPreEvolutions().size() == 0);
+	public static final Tier LC = new Tier("LC", "Little Cup", p -> !p.getForm().getEvolutions().isEmpty() && p.getForm().getPreEvolutions().isEmpty());
 	/**
 	 * Has strictly 1 type
 	 */

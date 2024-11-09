@@ -15,7 +15,7 @@ public abstract class RewardBase extends Mode {
 	 *
 	 * @param arg - The argument (potentially a blank string) for the reward. eg. "cash:500", "500" is the argument.
 	 */
-	public RewardBase(String arg) throws Exception {
+	public RewardBase(String arg) {
 	}
 
 	/**

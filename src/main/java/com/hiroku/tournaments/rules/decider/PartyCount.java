@@ -21,7 +21,7 @@ public class PartyCount extends DeciderRule {
 	public PartyCount(String arg) throws Exception {
 		super(arg);
 
-		if (!arg.equals(""))
+		if (!arg.isEmpty())
 			weight = Integer.parseInt(arg);
 	}
 

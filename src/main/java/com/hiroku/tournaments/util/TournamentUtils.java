@@ -13,6 +13,8 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +52,13 @@ public class TournamentUtils {
 	 */
 	public static void createDir(String path) {
 		File file = new File(path);
-		if (!file.exists())
-			file.mkdirs();
+		if (!file.exists()) {
+            try {
+                Files.createDirectories(file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 	}
 
 	/**

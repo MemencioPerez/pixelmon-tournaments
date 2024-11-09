@@ -68,7 +68,7 @@ public class PresetsCommand implements Command<CommandSource> {
         return check(context);
     }
 
-    private int check(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int check(CommandContext<CommandSource> context) {
         context.getSource().sendFeedback(Text.of(TextFormatting.GOLD, "------- Rule Presets --------"), false);
         Map<String, Preset> presets = Presets.getPresets();
         if (presets.isEmpty()) {
@@ -95,7 +95,7 @@ public class PresetsCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int rename(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int rename(CommandContext<CommandSource> context) {
         String presetName = context.getArgument("preset", String.class);
         String[] splits = presetName.split(" ");
         if (splits.length < 2) {
@@ -115,7 +115,7 @@ public class PresetsCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int save(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int save(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament. Try /tournament create"), false);
             return 0;
@@ -129,7 +129,7 @@ public class PresetsCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int load(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int load(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament. Try /tournament create"), false);
             return 0;
@@ -161,7 +161,7 @@ public class PresetsCommand implements Command<CommandSource> {
         return 1;
     }
 
-    private int delete(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private int delete(CommandContext<CommandSource> context) {
         if (Tournament.instance() == null) {
             context.getSource().sendFeedback(Text.of(TextFormatting.RED, "No tournament. Try /tournament create"), false);
             return 0;
