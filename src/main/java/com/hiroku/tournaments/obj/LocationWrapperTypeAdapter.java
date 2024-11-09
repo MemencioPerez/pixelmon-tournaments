@@ -24,16 +24,16 @@ public class LocationWrapperTypeAdapter extends TypeAdapter<LocationWrapper> {
         out.name("position");
         out.beginArray();
         Vector3d position = value.position;
-        out.name("x").value(position.x);
-        out.name("y").value(position.y);
-        out.name("z").value(position.z);
+        out.value(position.x);
+        out.value(position.y);
+        out.value(position.z);
         out.endArray();
 
         out.name("position");
         out.beginArray();
         Vector2f rotation = value.rotation;
-        out.name("pitch").value(rotation.x);
-        out.name("yaw").value(rotation.y);
+        out.value(rotation.x);
+        out.value(rotation.y);
         out.endArray();
 
         out.endObject();
