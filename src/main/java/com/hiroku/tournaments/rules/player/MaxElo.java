@@ -17,7 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import java.util.UUID;
 
 public class MaxElo extends PlayerRule {
-	int maxElo = 0;
+	int maxElo;
 
 	public MaxElo(String arg) throws Exception {
 		super(arg);

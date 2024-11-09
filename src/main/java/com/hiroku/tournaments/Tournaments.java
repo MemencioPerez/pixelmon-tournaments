@@ -62,7 +62,7 @@ public class Tournaments {
 	public static final LoginListener LOGIN_LISTENER = new LoginListener();
 
 	public static void log(String msg) {
-		LOGGER.log("Tournaments \u00BB " + msg);
+		LOGGER.log("Tournaments » " + msg);
 	}
 
 	public Tournaments() {

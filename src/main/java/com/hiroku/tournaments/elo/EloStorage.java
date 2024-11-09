@@ -7,6 +7,7 @@ import com.hiroku.tournaments.Tournaments;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -18,13 +19,12 @@ public class EloStorage {
 
 	private static EloStorage INSTANCE;
 
-	public Map<UUID, Map<EloTypes, EloData>> data = new HashMap<>();
+	public final Map<UUID, Map<EloTypes, EloData>> data = new HashMap<>();
 
 	public static void load() {
-		File file = new File(PATH);
-		file.getParentFile().mkdirs();
-
 		try {
+			File file = new File(PATH);
+			Files.createDirectories(file.getParentFile().toPath());
 			if (file.exists())
 				INSTANCE = GSON.fromJson(new FileReader(file), EloStorage.class);
 		} catch (Exception e) {
@@ -43,11 +43,14 @@ public class EloStorage {
 		if (pauseSaving)
 			return;
 
-		File file = new File(PATH);
-		file.getParentFile().mkdirs();
-
 		try {
-			file.createNewFile();
+			File file = new File(PATH);
+			Files.createDirectories(file.getParentFile().toPath());
+
+			if (!file.exists()) {
+				Files.createFile(file.toPath());
+			}
+
 			PrintWriter pw = new PrintWriter(file);
 			pw.write(GSON.toJson(INSTANCE));
 			pw.flush();

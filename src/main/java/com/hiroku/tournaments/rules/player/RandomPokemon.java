@@ -34,7 +34,7 @@ public class RandomPokemon extends PlayerRule {
     public List<Species> globalPool = new ArrayList<>();
     public HashMap<UUID, Integer> rerollsRemaining = new HashMap<>();
 
-    public List<Tier> tiers = new ArrayList<>();
+    public final List<Tier> tiers = new ArrayList<>();
     public final PokemonSpecification spec;
     public boolean rentalOnly = false;
     public boolean localDuplicates = false;
@@ -65,14 +65,14 @@ public class RandomPokemon extends PlayerRule {
                     maxRerolls = Integer.parseInt(argument.split(":")[1]);
                     if (maxRerolls < -1)
                         throw new IllegalArgumentException("Invalid number of rerolls. Must not be below -1");
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             } else if (argument.toLowerCase().contains("pokemon")) {
                 try {
                     numPokemon = Integer.parseInt(argument.split(":")[1]);
                     if (numPokemon < 1)
                         throw new IllegalArgumentException("Invalid number of Pokémon. Must be larger than zero");
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         }

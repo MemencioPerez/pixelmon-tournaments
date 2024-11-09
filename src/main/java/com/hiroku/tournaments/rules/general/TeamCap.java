@@ -28,8 +28,7 @@ public class TeamCap extends GeneralRule {
 			else {
 				try {
 					count = Integer.parseInt(option);
-				} catch (NumberFormatException nfe) {
-					continue;
+				} catch (NumberFormatException ignored) {
 				}
 			}
 		}

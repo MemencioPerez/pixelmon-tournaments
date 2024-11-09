@@ -35,10 +35,9 @@ public final class RuleTypeRegistrar {
 
 		List<String> sanitizedKeys = new ArrayList<>();
 
-		for (int i = 0; i < keys.size(); i++) {
-			String key = keys.get(i);
-			sanitizedKeys.add(key.toLowerCase());
-		}
+        for (String key : keys) {
+            sanitizedKeys.add(key.toLowerCase());
+        }
 
 		ruleTypes.put(sanitizedKeys, rule);
 	}

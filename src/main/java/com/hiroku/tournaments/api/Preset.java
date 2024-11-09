@@ -27,19 +27,19 @@ public class Preset {
     /**
      * The {@link RuleSet} for a preset.
      */
-    public RuleSet ruleSet;
+    public final RuleSet ruleSet;
     /**
      * The {@link RewardBase}s for a preset.
      */
-    public List<RewardBase> rewards;
+    public final List<RewardBase> rewards;
     /**
      * The {@link Zone}s that should be used for tournaments of this preset. If empty, all will be used.
      */
-    public List<Zone> zones;
+    public final List<Zone> zones;
     /**
      * The BattleRules for the preset.
      */
-    public BattleRules battleRules;
+    public final BattleRules battleRules;
 
     public Preset(RuleSet ruleSet, List<RewardBase> rewards, List<Zone> zones) {
         this.ruleSet = ruleSet;

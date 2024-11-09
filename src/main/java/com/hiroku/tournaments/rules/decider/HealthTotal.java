@@ -73,11 +73,6 @@ public class HealthTotal extends DeciderRule {
 	}
 
 	@Override
-	public boolean visibleToAll() {
-		return false;
-	}
-
-	@Override
 	public String getSerializationString() {
 		return "healthdecider:" + weight;
 	}

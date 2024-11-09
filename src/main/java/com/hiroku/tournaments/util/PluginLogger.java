@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -44,8 +45,8 @@ public class PluginLogger {
 		this.file = new File("logs/" + MODID + ".log");
 		try {
 			if (!this.file.exists())
-				this.file.createNewFile();
-		} catch (IOException ioe) {
+				Files.createFile(this.file.toPath());
+		} catch (Exception ioe) {
 			ioe.printStackTrace();
 		}
 		this.consoleLogger = LogManager.getLogger(MODID);

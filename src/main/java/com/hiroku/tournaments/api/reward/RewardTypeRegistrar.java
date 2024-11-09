@@ -14,7 +14,7 @@ public final class RewardTypeRegistrar {
 	/**
 	 * The mapping from key list to class representation of reward type.
 	 */
-	public static HashMap<List<String>, Class<? extends RewardBase>> rewardTypes = new HashMap<>();
+	public static final HashMap<List<String>, Class<? extends RewardBase>> rewardTypes = new HashMap<>();
 
 	/**
 	 * Registers a type of reward. If any keys are already in use, the existing reward type will be overwritten.

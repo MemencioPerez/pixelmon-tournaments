@@ -21,7 +21,7 @@ public class DisallowedAbility extends PlayerRule {
 	/**
 	 * The list of all abilities (represented by their classes) that are not allowed.
 	 */
-	public List<String> abilities = new ArrayList<>();
+	public final List<String> abilities = new ArrayList<>();
 
 	public DisallowedAbility(String arg) throws Exception {
 		super(arg);

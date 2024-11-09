@@ -17,11 +17,11 @@ public class PokemonState {
 	/**
 	 * The unique Pokémon ID (Pixelmon's)
 	 */
-	public UUID id;
+	public final UUID id;
 	/**
 	 * The HP the Pokémon was last seen on
 	 */
-	public float hp;
+	public final float hp;
 	/**
 	 * The status the Pokémon last had
 	 */

@@ -1,5 +1,6 @@
 package com.hiroku.tournaments.listeners;
 
+import com.happyzleaf.tournaments.User;
 import com.happyzleaf.tournaments.text.Text;
 import com.hiroku.tournaments.api.Tournament;
 import com.hiroku.tournaments.api.archetypes.pokemon.PokemonMatch;
@@ -17,6 +18,8 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class BattleListener {
@@ -30,22 +33,26 @@ public class BattleListener {
         if (event.isAbnormal())
             match.handleCrashedBattle(Tournament.instance());
         else {
-            UUID uuid = match.sides[0].teams[0].users.get(0).id;
-            BattleParticipant bp = event.getBattleController().participants.stream()
-                    .filter(p ->
-                            p instanceof PlayerParticipant
-                                    // TODO: Honestly I don't understand this line. I'll call this a day and go grab some cereals :3
-                                    && ((PlayerParticipant) p).player.getUniqueID().equals(uuid)).findFirst().get();
-            BattleResults result = event.getResults().get(bp);
-            Side side1 = match.getSide(uuid);
-            Side side2 = match.getOtherSide(side1);
+            List<User> userList = match.sides[0].teams[0].users;
 
-            if (result == BattleResults.VICTORY)
-                Tournament.instance().matchEnds(match, side1, side2);
-            else if (result == BattleResults.DRAW)
-                Tournament.instance().handleDraw(match);
-            else
-                Tournament.instance().matchEnds(match, side2, side1);
+            if (!userList.isEmpty()) {
+                UUID uuid = userList.get(0).id;
+                Optional<PlayerParticipant> playerParticipant = event.getBattleController().getPlayers().stream()
+                        .filter(p -> p.player.getUniqueID().equals(uuid)).findFirst();
+
+                if (playerParticipant.isPresent()) {
+                    BattleResults result = event.getResults().get(playerParticipant.get());
+                    Side side1 = match.getSide(uuid);
+                    Side side2 = match.getOtherSide(side1);
+
+                    if (result == BattleResults.VICTORY)
+                        Tournament.instance().matchEnds(match, side1, side2);
+                    else if (result == BattleResults.DRAW)
+                        Tournament.instance().handleDraw(match);
+                    else
+                        Tournament.instance().matchEnds(match, side2, side1);
+                }
+            }
         }
     }
 

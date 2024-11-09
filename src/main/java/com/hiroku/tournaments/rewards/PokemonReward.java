@@ -55,17 +55,19 @@ public class PokemonReward extends RewardBase {
 	public Text getDisplayText() {
 		Text.Builder builder = Text.builder().append(Text.of(TextFormatting.GOLD, "Pokémon: "));
 
-		Boolean shinySpec = spec.getRequirement(ShinyRequirement.class).map(Requirement::getValue).orElse(null);
-		if (shinySpec != null && shinySpec) {
-			builder.append(Text.of(TextFormatting.YELLOW, "Shiny", TextFormatting.GOLD, ", "));
-		}
+		spec.getRequirement(ShinyRequirement.class)
+				.map(Requirement::getValue)
+				.filter(Boolean::booleanValue)
+				.ifPresent(value -> builder.append(Text.of(TextFormatting.YELLOW, "Shiny", TextFormatting.GOLD, ", ")));
 
-		Integer levelSpec = spec.getRequirement(LevelRequirement.class).map(Requirement::getValue).orElse(null);
-		if (levelSpec != null) {
-			builder.append(Text.of(TextFormatting.DARK_AQUA, "Level ", levelSpec, " "));
-		}
+        spec.getRequirement(LevelRequirement.class)
+				.map(Requirement::getValue)
+				.ifPresent(levelSpec -> builder.append(Text.of(TextFormatting.DARK_AQUA, "Level ", levelSpec, " ")));
 
-		Species speciesSpec = spec.getRequirement(SpeciesRequirement.class).map(Requirement::getValue).flatMap(RegistryValue::getValue).orElse(PixelmonSpecies.MISSINGNO.getValueUnsafe());
+        Species speciesSpec = spec.getRequirement(SpeciesRequirement.class)
+				.map(Requirement::getValue)
+				.flatMap(RegistryValue::getValue)
+				.orElse(PixelmonSpecies.MISSINGNO.getValueUnsafe());
 		return builder.append(Text.of(TextFormatting.DARK_AQUA, speciesSpec.getName())).build();
 	}
 

@@ -22,7 +22,7 @@ public class Tiers extends PlayerRule {
 	/**
 	 * The list of {@link Tier} that define the Pokémon allowed in the tournament.
 	 */
-	public List<Tier> tiers = new ArrayList<>();
+	public final List<Tier> tiers = new ArrayList<>();
 
 	public Tiers(String arg) throws Exception {
 		super(arg);

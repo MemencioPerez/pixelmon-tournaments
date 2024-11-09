@@ -79,7 +79,7 @@ public class User {
     }
 
     public boolean is(CommandSource source) {
-        return source != null && source.getEntity() instanceof PlayerEntity && id == ((PlayerEntity) source.getEntity()).getUniqueID();
+        return source != null && source.getEntity() instanceof PlayerEntity && id == source.getEntity().getUniqueID();
     }
 
     public boolean hasPermission(String node) {

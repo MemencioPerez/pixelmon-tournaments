@@ -23,7 +23,7 @@ public class Team {
 	/**
 	 * The list of {@link User}s in the team.
 	 */
-	public List<User> users = new ArrayList<>();
+	public final List<User> users = new ArrayList<>();
 	/**
 	 * Whether the team is alive or knocked out.
 	 */

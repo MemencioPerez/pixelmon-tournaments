@@ -17,7 +17,7 @@ public class EloType extends GeneralRule {
 	/**
 	 * The list of recorded Elo-affecting matches that will process once the tournament finishes successfully.
 	 */
-	public List<EloMatch> eloMatches = new ArrayList<>();
+	public final List<EloMatch> eloMatches = new ArrayList<>();
 
 	public EloType(String arg) throws Exception {
 		super(arg);

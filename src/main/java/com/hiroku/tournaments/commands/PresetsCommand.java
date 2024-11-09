@@ -143,17 +143,21 @@ public class PresetsCommand implements Command<CommandSource> {
         }
 
         Preset preset = Presets.getPreset(name);
-        Tournament.instance().setRuleSet(preset.ruleSet);
-        Tournament.instance().rewards.addAll(preset.rewards);
-        if (!preset.zones.isEmpty()) {
-            for (Zone zone : Zones.INSTANCE.getZones()) {
-                if (!preset.zones.contains(zone)) {
-                    zone.engaged = false;
+        if (preset != null) {
+            Tournament.instance().setRuleSet(preset.ruleSet);
+            Tournament.instance().rewards.addAll(preset.rewards);
+            if (!preset.zones.isEmpty()) {
+                for (Zone zone : Zones.INSTANCE.getZones()) {
+                    if (!preset.zones.contains(zone)) {
+                        zone.engaged = false;
+                    }
                 }
             }
-        }
 
-        context.getSource().sendFeedback(Text.of(TextFormatting.DARK_GREEN, "Successfully loaded preset: ", TextFormatting.DARK_AQUA, name), false);
+            context.getSource().sendFeedback(Text.of(TextFormatting.DARK_GREEN, "Successfully loaded preset: ", TextFormatting.DARK_AQUA, name), false);
+        } else {
+            context.getSource().sendFeedback(Text.of(TextFormatting.DARK_GREEN, "Failed to load preset: ", TextFormatting.DARK_AQUA, name), false);
+        }
         return 1;
     }
 

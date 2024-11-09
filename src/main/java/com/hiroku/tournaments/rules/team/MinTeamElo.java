@@ -13,7 +13,7 @@ import net.minecraft.util.text.TextFormatting;
 import java.util.UUID;
 
 public class MinTeamElo extends TeamRule {
-	public int minTeamElo = 0;
+	public int minTeamElo;
 
 	public MinTeamElo(String arg) throws Exception {
 		super(arg);

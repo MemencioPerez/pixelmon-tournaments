@@ -77,7 +77,13 @@ public class Presets {
 		Tournaments.log("Loading presets from config/tournaments/presets/ ...");
 
 		File dir = new File(PATH);
-		dir.mkdirs();
+		if (!dir.exists()) {
+            try {
+                Files.createDirectories(dir.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 		String[] fileNames = dir.list();
 		if (fileNames != null) {
 			for (String fileName : fileNames) {
@@ -179,8 +185,13 @@ public class Presets {
 			return;
 		presets.remove(key);
 		File file = new File(PATH + key + ".json");
-		if (file.exists())
-			file.delete();
+		if (file.exists()) {
+            try {
+                Files.delete(file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 		Tournaments.log("Deleted preset: " + key + ".json");
 	}
 }

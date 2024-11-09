@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -44,7 +46,7 @@ public class TierLoader {
 				String displayName = key;
 				Predicate<Pokemon> condition = p -> CollectionHelper.find(pokemon, spec -> spec.matches(p)) != null;
 				BufferedReader br = new BufferedReader(new FileReader(file));
-				String line = null;
+				String line;
 				while ((line = br.readLine()) != null) {
 					line = line.trim();
 					if (line.startsWith("//"))
@@ -72,18 +74,31 @@ public class TierLoader {
 	/**
 	 * Recursive algorithm to collect all .tier.txt files in a directory.
 	 *
-	 * @param dir   - The current directory to search.
-	 * @param files - The latest list of non-directory {@link File}s that
-	 *              are recognized as tier files.
+	 * @param directoryPath - The current directory to search.
+	 * @param files         - The latest list of non-directory {@link File}s that
+	 *                      are recognized as tier files.
 	 */
-	public static void getFiles(String dir, List<File> files) {
-		File file = new File(dir);
-		for (String name : file.list()) {
-			File subFile = new File(dir + "/" + name);
-			if (subFile.isFile() && name.endsWith(".tier.txt"))
+	public static void getFiles(String directoryPath, List<File> files) {
+		File directory = new File(directoryPath);
+
+		if (!directory.exists() || !directory.isDirectory()) {
+			return;
+		}
+
+		String[] fileList = directory.list();
+		if (fileList == null) {
+			return;
+		}
+
+		for (String name : fileList) {
+			Path subFilePath = Paths.get(directoryPath, name);
+			File subFile = subFilePath.toFile();
+
+			if (subFile.isFile() && name.endsWith(".tier.txt")) {
 				files.add(subFile);
-			else if (subFile.isDirectory())
-				getFiles(dir + "/" + name, files);
+			} else if (subFile.isDirectory()) {
+				getFiles(subFilePath.toString(), files);
+			}
 		}
 	}
 }

@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisallowedPokemon extends PlayerRule {
-	public List<String> pokemons = new ArrayList<>();
-	public List<Tier> tiers = new ArrayList<>();
+	public final List<String> pokemons = new ArrayList<>();
+	public final List<Tier> tiers = new ArrayList<>();
 
 	public DisallowedPokemon(String arg) throws Exception {
 		super(arg);

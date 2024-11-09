@@ -93,7 +93,7 @@ public class Text extends StringTextComponent {
     }
 
     public String serialize() {
-        return this.plain.replace("\u00A7", "&");
+        return this.plain.replace("§", "&");
     }
 
     public static Text of(Object... texts) {
@@ -101,7 +101,7 @@ public class Text extends StringTextComponent {
     }
 
     public static Text deserialize(String text) {
-        return new Text(Collections.singletonList(text.replace("&", "\u00A7")));
+        return new Text(Collections.singletonList(text.replace("&", "§")));
     }
 
     public static Builder builder() {

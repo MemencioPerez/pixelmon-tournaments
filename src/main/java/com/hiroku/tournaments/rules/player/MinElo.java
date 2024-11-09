@@ -17,7 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import java.util.UUID;
 
 public class MinElo extends PlayerRule {
-	int minElo = 0;
+	int minElo;
 
 	public MinElo(String arg) throws Exception {
 		super(arg);

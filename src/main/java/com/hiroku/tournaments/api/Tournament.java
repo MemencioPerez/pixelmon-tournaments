@@ -56,7 +56,7 @@ public class Tournament extends Mode {
     /**
      * The type of {@link Match} to be instantiating in the standard match-maker.
      */
-    public Class<? extends Match> matchClass = PokemonMatch.class;
+    public final Class<? extends Match> matchClass = PokemonMatch.class;
     /**
      * The state of the tournament as a member of {@link TournamentStates}.
      */
@@ -81,7 +81,7 @@ public class Tournament extends Mode {
     /**
      * Extra modes that will not display anywhere (for programmers only)
      */
-    public List<Mode> extraModes = new ArrayList<>();
+    public final List<Mode> extraModes = new ArrayList<>();
 
     /**
      * The {@link Team}s of the tournament.
@@ -101,7 +101,7 @@ public class Tournament extends Mode {
      */
     public int roundNum = 0;
 
-    public List<UUID> tasks = new ArrayList<>();
+    public final List<UUID> tasks = new ArrayList<>();
 
     /**
      * Creates a new tournament with an immediate specification of some of its rules.
@@ -411,7 +411,7 @@ public class Tournament extends Mode {
             round = createMatches();
 
         if (!round.isEmpty()) {
-            Tournaments.EVENT_BUS.post(new RoundStartEvent(round == null ? (round = new ArrayList<>()) : round));
+            Tournaments.EVENT_BUS.post(new RoundStartEvent(round));
             getModes().forEach(mode -> mode.onRoundStart(this, ImmutableList.copyOf(round)));
 
             sendMessage(messageProvider.getUpcomingRoundMessage(roundNum, round));

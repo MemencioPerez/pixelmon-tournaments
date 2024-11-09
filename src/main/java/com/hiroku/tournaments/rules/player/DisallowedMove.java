@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisallowedMove extends PlayerRule {
-	public List<String> moves = new ArrayList<>();
+	public final List<String> moves = new ArrayList<>();
 
 	public DisallowedMove(String arg) throws Exception {
 		super(arg);

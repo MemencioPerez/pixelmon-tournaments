@@ -58,7 +58,7 @@ public class GsonUtils {
 					map.put(key, ((NumberNBT) base).getDouble());
 				else if (base instanceof CompoundNBT)
 					map.put(key, nbtToMap((CompoundNBT) base));
-			} catch (Exception exc) {}
+			} catch (Exception ignored) {}
 		}
 
 		return map;
@@ -77,7 +77,7 @@ public class GsonUtils {
 				} else {
 					nbt.putDouble(key, (Double) map.get(key));
 				}
-			} catch (Exception exc) {}
+			} catch (Exception ignored) {}
 		}
 
 		return nbt;

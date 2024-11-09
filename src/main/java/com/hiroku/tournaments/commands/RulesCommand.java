@@ -92,12 +92,10 @@ public class RulesCommand implements Command<CommandSource> {
                     }
 
                     RuleBase rule = RuleTypeRegistrar.parse(key, arg);
-                    if (rule != null) {
-                        if (Tournament.instance().getRuleSet().addRule(rule))
-                            context.getSource().sendFeedback(Text.of(TextFormatting.DARK_GREEN, "Successfully added rule: ", s), false);
-                        else
-                            context.getSource().sendFeedback(Text.of(TextFormatting.RED, "Unable to add rule"), false);
-                    }
+                    if (Tournament.instance().getRuleSet().addRule(rule))
+                        context.getSource().sendFeedback(Text.of(TextFormatting.DARK_GREEN, "Successfully added rule: ", s), false);
+                    else
+                        context.getSource().sendFeedback(Text.of(TextFormatting.RED, "Unable to add rule"), false);
                 } catch (Exception e) {
                     context.getSource().sendFeedback(Text.of(TextFormatting.RED, e.getMessage()), false);
                 }

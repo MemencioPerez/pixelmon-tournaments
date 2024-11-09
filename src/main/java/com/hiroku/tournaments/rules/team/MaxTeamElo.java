@@ -13,7 +13,7 @@ import net.minecraft.util.text.TextFormatting;
 import java.util.UUID;
 
 public class MaxTeamElo extends TeamRule {
-	public int maxTeamElo = 0;
+	public int maxTeamElo;
 
 	public MaxTeamElo(String arg) throws Exception {
 		super(arg);

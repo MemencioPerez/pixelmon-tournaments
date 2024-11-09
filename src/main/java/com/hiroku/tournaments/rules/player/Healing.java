@@ -31,7 +31,7 @@ public class Healing extends PlayerRule {
 	/**
 	 * A mapping from player UUID to a list of the previously saved states of a player's party. This is updated after each battle.
 	 */
-	public HashMap<UUID, List<PokemonState>> states = new HashMap<>();
+	public final HashMap<UUID, List<PokemonState>> states = new HashMap<>();
 
 	public Healing(String arg) throws Exception {
 		super(arg);

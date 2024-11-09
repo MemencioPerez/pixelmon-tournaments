@@ -114,7 +114,7 @@ public class RuleSet {
         for (RuleBase rule : rules) {
             try {
                 matchingRules.add(clazz.cast(rule));
-            } catch (ClassCastException cce) {
+            } catch (ClassCastException ignored) {
             }
         }
         return matchingRules;
@@ -131,7 +131,7 @@ public class RuleSet {
         for (RuleBase rule : rules) {
             try {
                 return clazz.cast(rule);
-            } catch (ClassCastException cce) {
+            } catch (ClassCastException ignored) {
             }
         }
         return null;
@@ -148,7 +148,7 @@ public class RuleSet {
             try {
                 ruleType.cast(rule);
                 matchingRules.add(rule);
-            } catch (ClassCastException cce) {
+            } catch (ClassCastException ignored) {
             }
         }
 
