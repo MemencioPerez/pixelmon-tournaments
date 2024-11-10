@@ -2,6 +2,7 @@ package com.hiroku.tournaments;
 
 import java.util.Arrays;
 
+import com.hiroku.tournaments.rules.player.*;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
@@ -37,17 +38,6 @@ import com.hiroku.tournaments.rules.general.BattleType;
 import com.hiroku.tournaments.rules.general.EloType;
 import com.hiroku.tournaments.rules.general.SetParty;
 import com.hiroku.tournaments.rules.general.TeamCap;
-import com.hiroku.tournaments.rules.player.DisallowedAbility;
-import com.hiroku.tournaments.rules.player.DisallowedMove;
-import com.hiroku.tournaments.rules.player.DisallowedPokemon;
-import com.hiroku.tournaments.rules.player.Healing;
-import com.hiroku.tournaments.rules.player.HeldItems;
-import com.hiroku.tournaments.rules.player.LevelMax;
-import com.hiroku.tournaments.rules.player.LevelMin;
-import com.hiroku.tournaments.rules.player.MaxElo;
-import com.hiroku.tournaments.rules.player.MinElo;
-import com.hiroku.tournaments.rules.player.RandomPokemon;
-import com.hiroku.tournaments.rules.player.Tiers;
 import com.hiroku.tournaments.rules.team.MaxTeamElo;
 import com.hiroku.tournaments.rules.team.MinTeamElo;
 import com.hiroku.tournaments.rules.team.PartyMax;
@@ -174,6 +164,7 @@ public class Tournaments
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("healthtotal", "healthdecider", "deciderhealth"), HealthTotal.class);
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("bannedmove", "bannedmoves", "disallowedmove", "disallowedmoves"), DisallowedMove.class);
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("bannedpokemon", "bannedpokemons", "disallowedpokemon", "disallowedpokemons"), DisallowedPokemon.class);
+		RuleTypeRegistrar.registerRuleType(Arrays.asList("bannedmechanic", "bannedmechanics", "disallowedmechanic", "disallowedmechanics"), DisallowedMechanic.class);
 		
 		// Elo rules
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("elotype"), EloType.class);
