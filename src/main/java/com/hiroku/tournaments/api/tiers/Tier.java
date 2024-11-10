@@ -59,6 +59,10 @@ public class Tier {
 	 */
 	public static final Tier GEN8 = new Tier("GEN8", "Generation 8", p -> p.getSpecies().getGeneration() == 8);
 	/**
+	 * Generation 9 Pokémon
+	 */
+	public static final Tier GEN9 = new Tier("GEN9", "Generation 9", p -> p.getSpecies().getGeneration() == 9);
+	/**
 	 * Fully Evolved, including non-evolving Pokémon like Luvdisc
 	 */
 	public static final Tier FE = new Tier("FE", "Fully-Evolved", p -> p.getForm().getEvolutions().isEmpty());
@@ -93,6 +97,7 @@ public class Tier {
 		tiers.add(GEN6);
 		tiers.add(GEN7);
 		tiers.add(GEN8);
+		tiers.add(GEN9);
 		tiers.add(FE);
 		tiers.add(NFE);
 		tiers.add(LC);
