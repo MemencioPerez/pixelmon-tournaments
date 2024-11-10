@@ -70,7 +70,7 @@ minecraft {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
 	implementation 'org.spongepowered:spongeapi:7.1.0-SNAPSHOT'
-    implementation 'reforged:server:8.3.1@Pixelmon-1.12.2-8.3.1c-server.jar'
+    implementation 'reforged:server:8.4.3@Pixelmon-1.12.2-8.4.3-server.jar'
     implementation group: 'com.exsoloscript.challonge', name: 'challonge-java', version: '1.0.3'
     implementation 'com.github.rojo8399:PlaceholderAPI:4.5.1'
 }
