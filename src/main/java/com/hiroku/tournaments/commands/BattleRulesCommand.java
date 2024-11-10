@@ -53,8 +53,7 @@ public class BattleRulesCommand implements Command<CommandSource> {
             Tournament.instance().getRuleSet().battleRules.importText(args);
             context.getSource().sendFeedback(Text.of(TextFormatting.GREEN, "Imported battle rules text. Use /tournament to check them."), false);
         } catch (Exception e) {
-            context.getSource().sendFeedback(Text.of(TextFormatting.RED, "Invalid battle rules text. Check your battle rules text and try again."), false);
-            e.printStackTrace();
+            context.getSource().sendFeedback(Text.of(TextFormatting.RED, "Invalid battle rules text. Check your battle rules text and try again. " + e.getMessage()), false);
         }
 
         return 1;
