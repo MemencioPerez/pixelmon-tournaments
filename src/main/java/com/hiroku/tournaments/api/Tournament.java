@@ -580,7 +580,7 @@ public class Tournament extends Mode
 		Tournaments.EVENT_BUS.post(new TournamentEndEvent(winnerUsers));
 		getModes().forEach(mode -> mode.onTournamentEnd(this, winnerUsers));
 		
-		if (winners == null || winners.isEmpty())
+		if (winners == null || winners.isEmpty() || this.teams.size() == 1)
 			sendMessage(messageProvider.getNoWinnerMessage());
 		else
 		{

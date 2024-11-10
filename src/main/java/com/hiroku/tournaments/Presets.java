@@ -107,7 +107,7 @@ public class Presets
 					BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(dir, fileName)), StandardCharsets.UTF_8));
 					
 					ArrayList<String> linesList = new ArrayList<String>();
-					String s = null;
+					String s;
 					while ((s = br.readLine()) != null)
 					{
 						if (s.trim().startsWith("//") || s.trim().equals("") || s.trim().equals("{") || s.trim().equals("}"))
@@ -116,7 +116,6 @@ public class Presets
 					}
 					
 					String[] args = new String[linesList.size()];
-					args = linesList.toArray(args);
 					
 					if (getMatchingKey(name) != null)
 						Tournaments.log("Duplicate presets for name: " + name);

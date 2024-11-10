@@ -47,10 +47,13 @@ public class RandomPokemon extends PlayerRule
 	public HashMap<UUID, Integer> rerollsRemaining = new HashMap<UUID, Integer>();
 	
 	public ArrayList<Tier> tiers = new ArrayList<Tier>();
-	public PokemonSpec spec = new PokemonSpec();
+	public PokemonSpec spec;
 	public boolean rentalOnly = false;
 	public boolean localDuplicates = false;
 	public boolean globalDuplicates = true;
+	public boolean canMegaEvo = true;
+	public boolean canDynamax = true;
+	public boolean canEvolve = true;
 	public int numPokemon;
 	public int maxRerolls = 1;
 	
@@ -70,12 +73,18 @@ public class RandomPokemon extends PlayerRule
 		{
 			if (Tier.parse(argument) != null)
 				tiers.add(Tier.parse(argument));
-			else if (argument.toLowerCase().equals("rentalonly"))
+			else if (argument.equalsIgnoreCase("rentalonly"))
 				rentalOnly = true;
-			else if (argument.toLowerCase().equals("localduplicates"))
+			else if (argument.equalsIgnoreCase("localduplicates"))
 				localDuplicates = true;
-			else if (argument.toLowerCase().equals("!globalduplicates"))
+			else if (argument.equalsIgnoreCase("!globalduplicates"))
 				globalDuplicates = false;
+			else if (argument.equalsIgnoreCase("!canMegaEvo"))
+				this.canMegaEvo = false;
+			else if (argument.equalsIgnoreCase("!canDynamax"))
+				this.canDynamax = false;
+			else if (argument.equalsIgnoreCase("!canEvolve"))
+				this.canEvolve = false;
 			else if (argument.toLowerCase().contains("reroll"))
 			{
 				try
@@ -114,10 +123,10 @@ public class RandomPokemon extends PlayerRule
 			Tiers rule = Tournament.instance().getRuleSet().getRule(Tiers.class);
 			if (rule == null && !tiers.isEmpty())
 			{
-				String classesStr = tiers.get(0).key;
+				StringBuilder classesStr = new StringBuilder(tiers.get(0).key);
 				for (int i = 1 ; i < tiers.size() ; i++)
-					classesStr += "," + tiers.get(i).key;
-				Tournament.instance().getRuleSet().addRule(new Tiers(classesStr));
+					classesStr.append(",").append(tiers.get(i).key);
+				Tournament.instance().getRuleSet().addRule(new Tiers(classesStr.toString()));
 			}
 		}
 	}
@@ -149,19 +158,25 @@ public class RandomPokemon extends PlayerRule
 	@Override
 	public String getSerializationString()
 	{
-		String line = "randompokemon:numpokemon:" + numPokemon + ",maxrerolls:" + maxRerolls;
+		StringBuilder line = new StringBuilder("randompokemon:numpokemon:" + numPokemon + ",maxrerolls:" + maxRerolls);
 		if (this.rentalOnly)
-			line += ",rentalonly";
+			line.append(",rentalonly");
 		String specString = PokemonUtils.serializePokemonSpec(spec);
 		if (!specString.equals(""))
-			line += "," + specString;
+			line.append(",").append(specString);
 		for (Tier tier : tiers)
-			line += "," + tier.key;
+			line.append(",").append(tier.key);
 		if (localDuplicates)
-			line += ",localduplicates";
+			line.append(",localduplicates");
 		if (!globalDuplicates)
-			line += ",!globalduplicates";
-		return line;
+			line.append(",!globalduplicates");
+		if (!this.canMegaEvo)
+			line.append(",!cammegaevolve");
+		if (!this.canDynamax)
+			line.append(",!candynamax");
+		if (!this.canEvolve)
+			line.append(",!canevolve");
+		return line.toString();
 	}
 
 	@Override
@@ -358,7 +373,22 @@ public class RandomPokemon extends PlayerRule
 			Pokemon pokemon = Pixelmon.pokemonFactory.create(CollectionHelper.getRandomElement(pool));
 			spec.apply(pokemon);
 			new PokemonSpec("untradeable", "unbreedable", "rental").apply(pokemon);
-			
+			if (!this.canMegaEvo)
+			{
+				PokemonSpec noMegaEvolve = new PokemonSpec("!canmegaevolve");
+				noMegaEvolve.apply(pokemon);
+			}
+			if (!this.canDynamax)
+			{
+				PokemonSpec canDynamax = new PokemonSpec("!candynamax");
+				canDynamax.apply(pokemon);
+			}
+			if (!this.canEvolve)
+			{
+				PokemonSpec canEvolve = new PokemonSpec("!canevolve");
+				canEvolve.apply(pokemon);
+			}
+
 			party.add(pokemon);
 			
 			if (!globalDuplicates)

@@ -11,7 +11,7 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 
-version = "1.12.2-2.7.0"
+version = "1.12.2-2.7.2"
 group= "com.hiroku.tournaments"
 archivesBaseName = "Tournaments"
 

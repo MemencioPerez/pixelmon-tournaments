@@ -19,8 +19,13 @@ import com.hiroku.tournaments.elo.EloPlaceholder;
 import com.hiroku.tournaments.elo.EloStorage;
 import com.hiroku.tournaments.listeners.BattleListener;
 import com.hiroku.tournaments.listeners.BreedListener;
+import com.hiroku.tournaments.listeners.DexListener;
+import com.hiroku.tournaments.listeners.DynamaxListener;
+import com.hiroku.tournaments.listeners.EvolutionListener;
 import com.hiroku.tournaments.listeners.ExperienceListener;
 import com.hiroku.tournaments.listeners.LoginListener;
+import com.hiroku.tournaments.listeners.LogoutListener;
+import com.hiroku.tournaments.listeners.MegaEvoListener;
 import com.hiroku.tournaments.listeners.TradeListener;
 import com.hiroku.tournaments.rewards.CommandReward;
 import com.hiroku.tournaments.rewards.ItemsReward;
@@ -72,7 +77,7 @@ public class Tournaments
 {
 	public static final String ID = "tournaments";
 	public static final String NAME = "Tournaments";
-	public static final String VERSION = "2.7.0";
+	public static final String VERSION = "2.7.2";
 	public static final String DESCRIPTION = "Advanced platform for Pixelmon tournaments";
 	public static final String AUTHORS = "Hiroku";
 	public static final EventBus EVENT_BUS = new EventBus();
@@ -85,9 +90,14 @@ public class Tournaments
 	public static final ExperienceListener experienceListener = new ExperienceListener();
 	public static final BreedListener breedListener = new BreedListener();
 	public static final TradeListener tradeListener = new TradeListener();
+	public static final DexListener dexListener = new DexListener();
+	public static final MegaEvoListener megaEvoListener = new MegaEvoListener();
+	public static final DynamaxListener dynamaxListener = new DynamaxListener();
+	public static final EvolutionListener evolutionListener = new EvolutionListener();
 	
 	// Sponge listeners
 	public static final LoginListener loginListener = new LoginListener();
+	public static final LogoutListener logoutListener = new LogoutListener();
 	
 	public static void log(String msg)
 	{
@@ -99,8 +109,7 @@ public class Tournaments
 	{
 		INSTANCE = this;
 		
-		log("Initializing Tournaments version " + VERSION + ", last updated for Pixelmon " + Pixelmon.VERSION + "...");
-		log("This platform was written by Hiroku!");
+		log("Initializing Tournaments version " + VERSION + ", last updated for Pixelmon " + Pixelmon.getVersion() + "...");
 		
 		TournamentUtils.createDir("config/tournaments");
 		TournamentUtils.createDir("data/tournaments");
@@ -109,8 +118,13 @@ public class Tournaments
 		Pixelmon.EVENT_BUS.register(experienceListener);
 		Pixelmon.EVENT_BUS.register(breedListener);
 		Pixelmon.EVENT_BUS.register(tradeListener);
+		Pixelmon.EVENT_BUS.register(dexListener);
+		Pixelmon.EVENT_BUS.register(megaEvoListener);
+		Pixelmon.EVENT_BUS.register(dynamaxListener);
+		Pixelmon.EVENT_BUS.register(evolutionListener);
 		
 		Sponge.getEventManager().registerListeners(this, loginListener);
+		Sponge.getEventManager().registerListeners(this, logoutListener);
 		
 		registerDefaultRules();
 		registerDefaultRewards();
