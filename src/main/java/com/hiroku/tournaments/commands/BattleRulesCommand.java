@@ -48,26 +48,7 @@ public class BattleRulesCommand implements Command<CommandSource> {
             return 0;
         }
 
-        String args = context.getArgument("args", String.class);
-
-        String[] argsSplit = args.split("[\\[\\]]");
-
-        if (args.length() >= 2) {
-            StringBuilder builder = new StringBuilder()
-                    .append(argsSplit[0]
-                            .replaceAll(",\\s?", "\n")
-                            .replaceAll(":\\s?", ": "))
-                    .append("[")
-                    .append(argsSplit[1]
-                            .replaceAll(",\\s?", ", "));
-            if (args.length() == 3) {
-                builder.append(argsSplit[2]
-                        .replaceAll(",\\s?", "\n")
-                        .replaceAll(":\\s?", ": "));
-            }
-            builder.append("]");
-            args = builder.toString();
-        }
+        String args = context.getArgument("args", String.class).replaceAll(",\\s?", ", ").replaceAll(":\\s?", ": ");
 
         try {
             Tournament.instance().getRuleSet().battleRules.importText(args);
