@@ -214,7 +214,7 @@ public class Presets
 		String key = getMatchingKey(name);
 		if (key == null)
 			return null;
-		return presets.get(key);
+		return presets.get(key).deepCopy();
 	}
 	
 	/** 

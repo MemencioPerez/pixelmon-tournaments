@@ -2,6 +2,9 @@ package com.hiroku.tournaments.api;
 
 import java.util.ArrayList;
 
+import com.hiroku.tournaments.api.reward.RewardTypeRegistrar;
+import com.hiroku.tournaments.api.rule.types.RuleBase;
+import com.hiroku.tournaments.util.GsonUtils;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
@@ -47,5 +50,33 @@ public class Preset
 		for (String battleRule : battleRules.exportText().split("\n"))
 			builder.append(Text.of("\n", TextColors.DARK_AQUA, battleRule));
 		return builder.build();
+	}
+
+	public Preset deepCopy()
+	{
+		try
+		{
+			RuleSet ruleSet = new RuleSet(this.ruleSet.rules.stream().map(RuleBase::getSerializationString).toArray(String[]::new));
+			ruleSet.br = new BattleRules(this.ruleSet.br.exportText());
+			ArrayList<RewardBase> rewards = new ArrayList<>();
+			for (RewardBase rewardBase : this.rewards)
+			{
+				String serializedReward = rewardBase.getSerializationString();
+				String key = serializedReward.split(":")[0];
+				String arg = serializedReward.substring(serializedReward.indexOf(":") + 1);
+				rewards.add(RewardTypeRegistrar.parse(key, arg));
+			}
+			ArrayList<Zone> zones = new ArrayList<>();
+			for (Zone zone : this.zones)
+			{
+				zones.add(GsonUtils.uglyGson.fromJson(GsonUtils.uglyGson.toJson(zone), Zone.class));
+			}
+			return new Preset(ruleSet, rewards, zones);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
