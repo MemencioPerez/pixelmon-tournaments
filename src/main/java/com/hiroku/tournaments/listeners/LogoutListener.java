@@ -10,9 +10,7 @@ public class LogoutListener
 	public void onLogout(Disconnect event)
 	{
 		if (Tournament.instance() != null)
-			if (Tournament.instance().getTeam(event.getTargetEntity().getUniqueId()) != null || !Tournament.instance().getTeam(event.getTargetEntity().getUniqueId()).alive)
+			if (Tournament.instance().getTeam(event.getTargetEntity().getUniqueId()) != null && Tournament.instance().getTeam(event.getTargetEntity().getUniqueId()).alive)
 				Tournament.instance().removeTeams(true, Tournament.instance().getTeam(event.getTargetEntity().getUniqueId()));
-			else
-				Tournament.instance().getTeam(event.getTargetEntity().getUniqueId()).refreshUser(event.getTargetEntity());
 	}
 }
