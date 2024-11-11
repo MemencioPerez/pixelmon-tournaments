@@ -2,6 +2,7 @@ package com.hiroku.tournaments.rules.player;
 
 import java.util.ArrayList;
 
+import com.hiroku.tournaments.util.PokemonUtils;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -27,7 +28,7 @@ public class DisallowedPokemon extends PlayerRule
 		for (String name : splits)
 		{
 			String str = name.replace("_", " ");
-			if (EnumSpecies.hasPokemon(str))
+			if (EnumSpecies.hasPokemon(str) || PokemonUtils.getFormData(str).isPresent())
 				pokemons.add(str);
 			else if (Tier.parse(name) != null)
 				tiers.add(Tier.parse(name));
@@ -35,12 +36,12 @@ public class DisallowedPokemon extends PlayerRule
 				throw new Exception("Invalid Pokémon or tier. These are case sensitive, and without spaces. e.g. Pikachu. Use _ instead of space");
 		}
 	}
-	
+
 	@Override
 	public boolean passes(Player player, PlayerPartyStorage storage)
 	{
-		for (Pokemon pokemon : storage.getTeam()) 
-			if (pokemons.contains(pokemon.getSpecies().getPokemonName()) || pokemons.contains(pokemon.getSpecies().getLocalizedName()))
+		for (Pokemon pokemon : storage.getTeam())
+			if (pokemons.contains(PokemonUtils.getFormName(pokemon.getSpecies(), (short) pokemon.getForm())))
 				return false;
 			else if (CollectionHelper.find(tiers, tier -> tier.condition.test(pokemon)) != null)
 				return false;
