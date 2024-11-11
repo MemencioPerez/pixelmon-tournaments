@@ -20,7 +20,6 @@ import com.hiroku.tournaments.api.rule.RuleSet;
 import com.hiroku.tournaments.api.rule.RuleTypeRegistrar;
 import com.hiroku.tournaments.api.rule.types.RuleBase;
 import com.hiroku.tournaments.obj.Zone;
-import com.pixelmonmod.pixelmon.battles.rules.BattleRules;
 
 /**
  * Static manager of all the rule+reward+zone presets. These are located: ./config/tournaments/presets/*.txt
@@ -125,12 +124,11 @@ public class Presets
 						RuleSet ruleset = new RuleSet();
 						ArrayList<RewardBase> rewards = new ArrayList<RewardBase>();
 						ArrayList<Zone> zones = new ArrayList<Zone>();
-						BattleRules battleRules = new BattleRules();
 						
 						for (String line : linesList)
 						{
 							if (line.trim().toLowerCase().startsWith("battlerules"))
-								battleRules.importText(line.split("=")[1].trim().replaceAll(",", "\n"));
+								ruleset.br.importText(line.split("=")[1].trim().replaceAll(",", "\n"));
 							else if (line.trim().toLowerCase().startsWith("rules"))
 								ruleRewardZone = 0;
 							else if (line.trim().toLowerCase().startsWith("rewards"))
