@@ -69,10 +69,16 @@ public class DisallowedHeldItem extends PlayerRule
 	public Text getDisplayText() 
 	{
 		Text.Builder builder = Text.builder();
-		builder.append(Text.of(TextColors.DARK_AQUA, items.get(0)));
+		Item heldItem = ItemHeld.getByNameOrId(items.get(0));
+		if (heldItem != null)
+			builder.append(Text.of(TextColors.DARK_AQUA, new ItemStack(heldItem).getDisplayName()));
 		for (int i = 1; i < items.size(); i++)
-			builder.append(Text.of(TextColors.GOLD, ", ", TextColors.DARK_AQUA, items.get(i)));
-		return Text.of(TextColors.GOLD, "Disallowed held item(s): ", builder.build());
+		{
+			heldItem = ItemHeld.getByNameOrId(items.get(i));
+			if (heldItem != null)
+				builder.append(Text.of(TextColors.GOLD, ", ", TextColors.DARK_AQUA, new ItemStack(heldItem).getDisplayName()));
+		}
+		return Text.of(TextColors.GOLD, asWhitelist ? "Allowed" : "Disallowed"," held item(s): ", builder.build());
 	}
 	
 	@Override
