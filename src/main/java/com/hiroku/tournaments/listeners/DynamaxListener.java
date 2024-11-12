@@ -19,7 +19,7 @@ public class DynamaxListener
 			if (event.pw.pokemon.getOwnerPlayer() == null || event.pw.pokemon == null)
 				return;
 			DisallowedMechanic disallowedMechanicRule = Tournament.instance().getRuleSet().getRule(DisallowedMechanic.class);
-			if ((disallowedMechanicRule != null || (new PokemonSpec("rental")).matches(event.pw.pokemon)) && (new PokemonSpec("!candynamax")).matches(event.pw.pokemon))
+			if (disallowedMechanicRule != null && disallowedMechanicRule.mechanics.contains("Dynamax") || (new PokemonSpec("rental")).matches(event.pw.pokemon) && (new PokemonSpec("!candynamax")).matches(event.pw.pokemon))
 			{
 				event.setCanceled(true);
 				event.pw.pokemon.getOwnerPlayer().sendMessage(new TextComponentString(TextFormatting.RED + "Dynamax/Gigantamax is blocked in the tournament!"));

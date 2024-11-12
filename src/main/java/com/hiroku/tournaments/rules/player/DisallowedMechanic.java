@@ -1,14 +1,9 @@
 package com.hiroku.tournaments.rules.player;
 
-import com.hiroku.tournaments.api.Tournament;
 import com.hiroku.tournaments.api.rule.types.PlayerRule;
 import com.hiroku.tournaments.api.rule.types.RuleBase;
-import com.hiroku.tournaments.obj.Team;
-import com.pixelmonmod.pixelmon.Pixelmon;
-import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.storage.PlayerPartyStorage;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
@@ -17,12 +12,6 @@ import java.util.*;
 public class DisallowedMechanic extends PlayerRule
 {
 	public ArrayList<String> mechanics = new ArrayList<String>();
-	public static Map<String, String> defaultMechanicsAndSpecs = new HashMap<>();
-	static
-	{
-		defaultMechanicsAndSpecs.put("Mega Evolution", "!canmegaevolve");
-		defaultMechanicsAndSpecs.put("Dynamax", "!candynamax");
-	}
 
 	public DisallowedMechanic(String arg) throws Exception
 	{
@@ -32,7 +21,7 @@ public class DisallowedMechanic extends PlayerRule
 		for (String name : splits) 
 		{
 			String str = name.replace("_", " ");
-			if (defaultMechanicsAndSpecs.containsKey(str))
+			if (str.equals("Mega Evolution") || str.equals("Dynamax"))
 				mechanics.add(str);
 			else
 				throw new Exception("Invalid mechanic. These are case sensitive, and without spaces. e.g. Mega_Evolution. Use _ instead of space");
@@ -86,66 +75,5 @@ public class DisallowedMechanic extends PlayerRule
 	public boolean visibleToAll()
 	{
 		return true;
-	}
-
-	@Override
-	public void onTeamJoin(Tournament tournament, Team team, boolean forced)
-	{
-		for (User user : team.users)
-		{
-			if (user.getPlayer().isPresent())
-			{
-				removeDisallowedMechanicsSpecs(user.getPlayer().get());
-				applyDisallowedMechanicsSpecs(user.getUniqueId());
-			}
-		}
-	}
-
-	@Override
-	public void onTeamLeave(Tournament tournament, Team team, boolean forced)
-	{
-		for (User user : team.users)
-			if (user.getPlayer().isPresent())
-				removeDisallowedMechanicsSpecs(user.getPlayer().get());
-	}
-
-	@Override
-	public void onTeamKnockedOut(Tournament tournament, Team team)
-	{
-		for (User user : team.users)
-			if (user.getPlayer().isPresent())
-				removeDisallowedMechanicsSpecs(user.getPlayer().get());
-	}
-
-	@Override
-	public void onTeamForfeit(Tournament tournament, Team team, boolean forced)
-	{
-		for (User user : team.users)
-			if (user.getPlayer().isPresent())
-				removeDisallowedMechanicsSpecs(user.getPlayer().get());
-	}
-
-	@Override
-	public void onTournamentEnd(Tournament tournament, List<User> winners)
-	{
-		for (User user : winners)
-			if (user.getPlayer().isPresent())
-				removeDisallowedMechanicsSpecs(user.getPlayer().get());
-	}
-
-	public void applyDisallowedMechanicsSpecs(UUID uuid) {
-		PlayerPartyStorage party = Pixelmon.storageManager.getParty(uuid);
-		for (Pokemon pokemon : party.getTeam())
-			for (String mechanic : mechanics)
-				if (defaultMechanicsAndSpecs.containsKey(mechanic))
-					pokemon.addSpecFlag(defaultMechanicsAndSpecs.get(mechanic));
-	}
-
-	public void removeDisallowedMechanicsSpecs(User user) {
-		PlayerPartyStorage party = Pixelmon.storageManager.getParty(user.getUniqueId());
-		for (Pokemon pokemon : party.getTeam())
-			for (String mechanic : mechanics)
-				if (defaultMechanicsAndSpecs.containsKey(mechanic))
-					pokemon.removeSpecFlag(defaultMechanicsAndSpecs.get(mechanic));
 	}
 }
