@@ -166,6 +166,7 @@ public class Tournaments
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("bannedpokemon", "bannedpokemons", "disallowedpokemon", "disallowedpokemons"), DisallowedPokemon.class);
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("bannedmechanic", "bannedmechanics", "disallowedmechanic", "disallowedmechanics"), DisallowedMechanic.class);
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("bannedhelditem", "bannedhelditems", "disallowedhelditem", "disallowedhelditems"), DisallowedHeldItem.class);
+		RuleTypeRegistrar.registerRuleType(Arrays.asList("changeteam", "teamchange"), TeamChange.class);
 		
 		// Elo rules
 		RuleTypeRegistrar.registerRuleType(Arrays.asList("elotype"), EloType.class);
