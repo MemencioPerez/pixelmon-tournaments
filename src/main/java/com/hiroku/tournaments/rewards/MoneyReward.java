@@ -2,6 +2,8 @@ package com.hiroku.tournaments.rewards;
 
 import com.happyzleaf.tournaments.text.Text;
 import com.hiroku.tournaments.api.reward.RewardBase;
+import com.pixelmonmod.pixelmon.api.economy.BankAccount;
+import com.pixelmonmod.pixelmon.api.economy.BankAccountProxy;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +11,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * Reward that gives money to the player.
@@ -29,9 +32,11 @@ public class MoneyReward extends RewardBase {
 
 	@Override
 	public void give(PlayerEntity player) {
-		PlayerPartyStorage party = StorageProxy.getParty(player.getUniqueID());
-		party.setBalance(party.getBalance().add(BigDecimal.valueOf(amount)));
-		player.sendMessage(Text.of(TextFormatting.DARK_GREEN, "You were rewarded $", amount), Util.DUMMY_UUID);
+		Optional<? extends BankAccount> bankAccount = BankAccountProxy.getBankAccount(player.getUniqueID());
+		if (bankAccount.isPresent()) {
+			bankAccount.get().add(BigDecimal.valueOf(amount));
+			player.sendMessage(Text.of(TextFormatting.DARK_GREEN, "You were rewarded $", amount), Util.DUMMY_UUID);
+		}
 	}
 
 	@Override
