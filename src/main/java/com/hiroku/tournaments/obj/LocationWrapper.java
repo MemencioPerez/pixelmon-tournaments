@@ -3,11 +3,13 @@ package com.hiroku.tournaments.obj;
 import com.happyzleaf.tournaments.text.Text;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Optional;
 
@@ -42,14 +44,12 @@ public class LocationWrapper {
 		}
 
 		if (player.getServer() != null) {
-			if (!player.getEntityWorld().getDimensionKey().equals(this.dimensionKey)) {
-				Optional<World> world = Optional.ofNullable(player.getServer().getWorld(this.dimensionKey));
-                world.ifPresent(player::setWorld);
+			Optional<ServerWorld> world = Optional.ofNullable(player.getServer().getWorld(this.dimensionKey));
+			if (world.isPresent()) {
+				Vector3d position = this.position == null ? player.getPositionVec() : this.position;
+				Vector2f rotation = this.rotation == null ? player.getPitchYaw() : this.rotation;
+				((ServerPlayerEntity) player).teleport(world.get(), position.getX(), position.getY(), position.getZ(), rotation.x, rotation.y);
 			}
-
-			Vector3d position = this.position == null ? player.getPositionVec() : this.position;
-			Vector2f rotation = this.rotation == null ? player.getPitchYaw() : this.rotation;
-			player.setLocationAndAngles(position.getX(), position.getY(), position.getZ(), rotation.x, rotation.y);
 		}
 	}
 }
