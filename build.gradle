@@ -104,7 +104,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
 
-    implementation fg.deobf('pixelmon:Pixelmon-1.16.5-9.1.12-server:9.1.12')
+    implementation fg.deobf('pixelmon:Pixelmon-1.16.5-9.1.13-server:9.1.13')
 
     implementation 'org.spongepowered:mixin:0.8.7'
     implementation 'org.spongepowered:mixin:0.8.7:processor'
