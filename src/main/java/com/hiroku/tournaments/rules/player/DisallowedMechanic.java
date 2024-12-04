@@ -3,16 +3,15 @@ package com.hiroku.tournaments.rules.player;
 import com.happyzleaf.tournaments.text.Text;
 import com.hiroku.tournaments.api.rule.types.PlayerRule;
 import com.hiroku.tournaments.api.rule.types.RuleBase;
-import com.pixelmonmod.api.pokemon.requirement.impl.CanMegaEvolveRequirement;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
 
-import java.util.ArrayList;
-
 public class DisallowedMechanic extends PlayerRule {
-    ArrayList<String> mechanics = new ArrayList<>();
+    private boolean isMegaEvolutionDisallowed = false;
+    private boolean isDynamaxDisallowed = false;
 
     public DisallowedMechanic(String arg) throws Exception {
         super(arg);
@@ -20,26 +19,31 @@ public class DisallowedMechanic extends PlayerRule {
         String[] splits = arg.split(",");
         for (String name : splits) {
             String str = name.replace("_", " ");
-            if (str.contains("Mega Evolution") || str.contains("Dynamax") || str.contains("Gigantamax")) {
-                mechanics.add(str);
+            if (str.contains("Mega Evolution")) {
+                isMegaEvolutionDisallowed = true;
+            } else if (str.contains("Dynamax")) {
+                isDynamaxDisallowed = true;
             } else {
                 throw new Exception("Invalid mechanic. These are case sensitive, and without spaces. e.g. Mega_Evolution. Use _ instead of space");
             }
         }
     }
 
+    public boolean isMegaEvolutionDisallowed() {
+        return isMegaEvolutionDisallowed;
+    }
+
+    public boolean isDynamaxDisallowed() {
+        return isDynamaxDisallowed;
+    }
+
     @Override
     public boolean passes(PlayerEntity player, PlayerPartyStorage storage) {
         for (Pokemon pokemon : storage.getTeam()) {
-            if (mechanics.contains("Mega Evolution")) {
-                return !new CanMegaEvolveRequirement().isDataMatch(pokemon);
-            }
-            if (mechanics.contains("Dynamax")) {
-                return !(pokemon.getDynamaxLevel() > 0);
-            }
-            if (mechanics.contains("Gigantamax")) {
-                return !pokemon.canGigantamax();
-            }
+            if (isMegaEvolutionDisallowed)
+                player.sendMessage(Text.of(TextFormatting.RED, "Your ", pokemon.getLocalizedName(), " will be unable to Mega Evolve because this Tournament disallows the Mega Evolution mechanic"), Util.DUMMY_UUID);
+            if (isDynamaxDisallowed)
+                player.sendMessage(Text.of(TextFormatting.RED, "Your ", pokemon.getLocalizedName(), " will be unable to Dynamax because this Tournament disallows the Dynamax mechanic"), Util.DUMMY_UUID);
         }
         return true;
     }
@@ -52,9 +56,10 @@ public class DisallowedMechanic extends PlayerRule {
     @Override
     public Text getDisplayText() {
         Text.Builder builder = Text.builder();
-        builder.append(Text.of(TextFormatting.DARK_AQUA, mechanics.get(0)));
-        for (int i = 1; i < mechanics.size(); i++)
-            builder.append(Text.of(TextFormatting.GOLD, ", ", TextFormatting.DARK_AQUA, mechanics.get(i)));
+        if (isMegaEvolutionDisallowed)
+            builder.append(Text.of(TextFormatting.DARK_AQUA, "Mega Evolution"));
+        if (isDynamaxDisallowed)
+            builder.append(Text.of(TextFormatting.DARK_AQUA, "Dynamax"));
         return Text.of(TextFormatting.GOLD, "Disallowed mechanic(s): ", builder.build());
     }
 
@@ -62,18 +67,19 @@ public class DisallowedMechanic extends PlayerRule {
     public boolean duplicateAllowed(RuleBase other) {
         // Transfers this rule's ability list into the rule that's about to replace it.
         DisallowedMechanic disallowed = (DisallowedMechanic) other;
-        for (String ability : this.mechanics)
-            if (!disallowed.mechanics.contains(ability))
-                disallowed.mechanics.add(ability);
+        this.isMegaEvolutionDisallowed = disallowed.isMegaEvolutionDisallowed();
+        this.isDynamaxDisallowed = disallowed.isDynamaxDisallowed();
 
         return false;
     }
 
     @Override
     public String getSerializationString() {
-        StringBuilder serialize = new StringBuilder(mechanics.get(0));
-        for (int i = 1; i < mechanics.size(); i++)
-            serialize.append(",").append(mechanics.get(i));
+        StringBuilder serialize = new StringBuilder();
+        if (isMegaEvolutionDisallowed)
+            serialize.append(Text.of(TextFormatting.DARK_AQUA, "Mega_Evolution"));
+        if (isDynamaxDisallowed)
+            serialize.append(Text.of(TextFormatting.DARK_AQUA, "Dynamax"));
         return "disallowedmechanics:" + serialize;
     }
 
