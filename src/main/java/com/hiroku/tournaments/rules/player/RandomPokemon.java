@@ -39,6 +39,9 @@ public class RandomPokemon extends PlayerRule {
     public boolean rentalOnly = false;
     public boolean localDuplicates = false;
     public boolean globalDuplicates = true;
+    public boolean canMegaEvo = true;
+    public boolean canDynamax = true;
+    public boolean canEvolve = true;
     public int numPokemon;
     public int maxRerolls = 1;
 
@@ -60,6 +63,12 @@ public class RandomPokemon extends PlayerRule {
                 localDuplicates = true;
             else if (argument.equalsIgnoreCase("!globalduplicates"))
                 globalDuplicates = false;
+            else if (argument.equalsIgnoreCase("!canMegaEvo"))
+                this.canMegaEvo = false;
+            else if (argument.equalsIgnoreCase("!canDynamax"))
+                this.canDynamax = false;
+            else if (argument.equalsIgnoreCase("!canEvolve"))
+                this.canEvolve = false;
             else if (argument.toLowerCase().contains("reroll")) {
                 try {
                     maxRerolls = Integer.parseInt(argument.split(":")[1]);
@@ -127,6 +136,12 @@ public class RandomPokemon extends PlayerRule {
             line.append(",localduplicates");
         if (!globalDuplicates)
             line.append(",!globalduplicates");
+        if (!this.canMegaEvo)
+            line.append(",!cammegaevolve");
+        if (!this.canDynamax)
+            line.append(",!candynamax");
+        if (!this.canEvolve)
+            line.append(",!canevolve");
         return line.toString();
     }
 
@@ -301,6 +316,21 @@ public class RandomPokemon extends PlayerRule {
 
             Pokemon pokemon = PokemonFactory.create(CollectionHelper.getRandomElement(pool));
             spec.apply(pokemon);
+            if (!this.canMegaEvo)
+            {
+                PokemonSpecification noMegaEvolve = PokemonSpecificationProxy.create("!canmegaevolve");
+                noMegaEvolve.apply(pokemon);
+            }
+            if (!this.canDynamax)
+            {
+                PokemonSpecification canDynamax = PokemonSpecificationProxy.create("!candynamax");
+                canDynamax.apply(pokemon);
+            }
+            if (!this.canEvolve)
+            {
+                PokemonSpecification canEvolve = PokemonSpecificationProxy.create("!canevolve");
+                canEvolve.apply(pokemon);
+            }
 
             party.add(pokemon);
 
