@@ -4,6 +4,7 @@ import com.happyzleaf.tournaments.text.Text;
 import com.hiroku.tournaments.api.rule.types.PlayerRule;
 import com.hiroku.tournaments.api.rule.types.RuleBase;
 import com.hiroku.tournaments.api.tiers.Tier;
+import com.hiroku.tournaments.util.PixelmonUtils;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
@@ -24,7 +25,7 @@ public class DisallowedPokemon extends PlayerRule {
 		String[] splits = arg.split(",");
 		for (String name : splits) {
 			String str = name.replace("_", " ");
-			if (PixelmonSpecies.has(str))
+			if (PixelmonUtils.getFormData(str).isPresent() || PixelmonSpecies.has(str))
 				pokemons.add(str);
 			else if (Tier.parse(name) != null)
 				tiers.add(Tier.parse(name));
@@ -36,7 +37,7 @@ public class DisallowedPokemon extends PlayerRule {
 	@Override
 	public boolean passes(PlayerEntity player, PlayerPartyStorage storage) {
 		for (Pokemon pokemon : storage.getTeam())
-			if (pokemons.contains(pokemon.getSpecies().getName()) || pokemons.contains(pokemon.getSpecies().getLocalizedName()))
+			if (pokemons.contains(PixelmonUtils.getFormName(pokemon)))
 				return false;
 			else if (CollectionHelper.find(tiers, tier -> tier.condition.test(pokemon)) != null)
 				return false;
