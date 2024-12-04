@@ -7,6 +7,7 @@ import com.hiroku.tournaments.Zones;
 import com.hiroku.tournaments.api.reward.RewardBase;
 import com.hiroku.tournaments.api.rule.RuleSet;
 import com.hiroku.tournaments.obj.Zone;
+import com.hiroku.tournaments.util.GsonUtils;
 import com.hiroku.tournaments.util.PixelmonUtils;
 import com.pixelmonmod.pixelmon.battles.api.rules.BattleProperty;
 import com.pixelmonmod.pixelmon.battles.api.rules.BattleRules;
@@ -66,6 +67,11 @@ public class Preset {
         }
 
         return builder.build();
+    }
+
+    public Preset deepCopy() {
+        String json = GsonUtils.prettyGson.toJson(this);
+        return GsonUtils.prettyGson.fromJson(json, Preset.class);
     }
 
     public static class Serializer implements JsonSerializer<Preset> {
