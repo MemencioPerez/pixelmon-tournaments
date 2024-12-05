@@ -61,7 +61,12 @@ public class Tournaments {
 	public static final ExperienceListener EXPERIENCE_LISTENER = new ExperienceListener();
 	public static final BreedListener BREED_LISTENER = new BreedListener();
 	public static final TradeListener TRADE_LISTENER = new TradeListener();
+	public static final DexListener DEX_LISTENER = new DexListener();
+	public static final MegaEvoListener MEGA_EVO_LISTENER = new MegaEvoListener();
+	public static final DynamaxListener DYNAMAX_LISTENER = new DynamaxListener();
+	public static final EvolutionListener EVOLUTION_LISTENER = new EvolutionListener();
 	public static final LoginListener LOGIN_LISTENER = new LoginListener();
+	public static final LogoutListener LOGOUT_LISTENER = new LogoutListener();
 
 	public static void log(String msg) {
 		LOGGER.log("Tournaments » " + msg);
@@ -89,7 +94,12 @@ public class Tournaments {
 		Pixelmon.EVENT_BUS.register(EXPERIENCE_LISTENER);
 		Pixelmon.EVENT_BUS.register(BREED_LISTENER);
 		Pixelmon.EVENT_BUS.register(TRADE_LISTENER);
+		Pixelmon.EVENT_BUS.register(DEX_LISTENER);
+		Pixelmon.EVENT_BUS.register(MEGA_EVO_LISTENER);
+		Pixelmon.EVENT_BUS.register(DYNAMAX_LISTENER);
+		Pixelmon.EVENT_BUS.register(EVOLUTION_LISTENER);
 		MinecraftForge.EVENT_BUS.register(LOGIN_LISTENER);
+		MinecraftForge.EVENT_BUS.register(LOGOUT_LISTENER);
 
 		registerDefaultRules();
 		registerDefaultRewards();
