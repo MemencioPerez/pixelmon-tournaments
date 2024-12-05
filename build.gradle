@@ -21,7 +21,7 @@ group = 'com.hiroku'
 version = '1.16.5-4.0.0-SNAPSHOT'
 
 java {
-    archivesBaseName = 'tournaments'
+    archivesBaseName = 'Tournaments'
     toolchain.languageVersion = JavaLanguageVersion.of(8)
 }
 
