@@ -41,13 +41,11 @@ public class DisallowedHeldItem extends PlayerRule {
 	public boolean passes(PlayerEntity player, PlayerPartyStorage storage) {
 		for (Pokemon pokemon : storage.getTeam()) {
 			HeldItem heldItem = pokemon.getHeldItemAsItemHeld();
-			if (!(heldItem instanceof NoItem)) {
-				ResourceLocation location = heldItem.getRegistryName();
-				if (location != null) {
-					boolean itemInList = items.contains(location.getPath());
-					if (itemInList != asWhitelist)
-						return false;
-				}
+			ResourceLocation location = heldItem.getRegistryName();
+			if (heldItem != NoItem.noItem && location != null) {
+				boolean itemInList = items.contains(location.getPath());
+				if (itemInList != asWhitelist)
+					return false;
 			}
 		}
 		return true;
