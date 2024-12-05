@@ -5,13 +5,13 @@ import com.hiroku.tournaments.api.rule.types.PlayerRule;
 import com.hiroku.tournaments.api.rule.types.RuleBase;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
-import com.pixelmonmod.pixelmon.init.registry.ItemRegistration;
 import com.pixelmonmod.pixelmon.items.HeldItem;
 import com.pixelmonmod.pixelmon.items.heldItems.NoItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +29,11 @@ public class DisallowedHeldItem extends PlayerRule {
 				asWhitelist = true;
 				continue;
 			}
-			Item item = ItemRegistration.getItemFromName(name);
+			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
 			if (item instanceof HeldItem)
 				items.add(name);
 			else
-				throw new Exception("Invalid held item name. These are case sensitive, and without spaces. e.g. choice_scarf. Use _ instead of space");
+				throw new Exception("Invalid held item name. These are case sensitive, and without spaces. e.g. pixelmon:choice_scarf. Use _ instead of space");
 		}
 	}
 
@@ -43,7 +43,7 @@ public class DisallowedHeldItem extends PlayerRule {
 			HeldItem heldItem = pokemon.getHeldItemAsItemHeld();
 			ResourceLocation location = heldItem.getRegistryName();
 			if (heldItem != NoItem.noItem && location != null) {
-				boolean itemInList = items.contains(location.getPath());
+				boolean itemInList = items.contains(location.toString());
 				if (itemInList != asWhitelist)
 					return false;
 			}
@@ -59,11 +59,11 @@ public class DisallowedHeldItem extends PlayerRule {
 	@Override
 	public Text getDisplayText() {
 		Text.Builder builder = Text.builder();
-		Item item = ItemRegistration.getItemFromName(items.get(0));
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(items.get(0)));
 		if (item != null)
 			builder.append(Text.of(TextFormatting.DARK_AQUA, item.getDefaultInstance().getDisplayName()));
 		for (int i = 1; i < items.size(); i++) {
-			item = ItemRegistration.getItemFromName(items.get(i));
+			item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(items.get(i)));
 			if (item != null)
 				builder.append(Text.of(TextFormatting.GOLD, ", ", TextFormatting.DARK_AQUA, item.getDefaultInstance().getDisplayName()));
 		}
