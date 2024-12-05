@@ -3,6 +3,7 @@ package com.hiroku.tournaments.rules.player;
 import com.happyzleaf.tournaments.text.Text;
 import com.hiroku.tournaments.api.rule.types.PlayerRule;
 import com.hiroku.tournaments.api.rule.types.RuleBase;
+import com.pixelmonmod.api.pokemon.requirement.impl.CanMegaEvolveRequirement;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,12 +40,12 @@ public class DisallowedMechanic extends PlayerRule {
 
     @Override
     public boolean passes(PlayerEntity player, PlayerPartyStorage storage) {
-        for (Pokemon pokemon : storage.getTeam()) {
-            if (isMegaEvolutionDisallowed)
+        if (isDynamaxDisallowed)
+            player.sendMessage(Text.of(TextFormatting.RED, "Your Pokémon will be unable to Dynamax because this Tournament disallows the Dynamax mechanic"), Util.DUMMY_UUID);
+        CanMegaEvolveRequirement canMegaEvolveRequirement = new CanMegaEvolveRequirement();
+        for (Pokemon pokemon : storage.getTeam())
+            if (isMegaEvolutionDisallowed && canMegaEvolveRequirement.isDataMatch(pokemon))
                 player.sendMessage(Text.of(TextFormatting.RED, "Your ", pokemon.getLocalizedName(), " will be unable to Mega Evolve because this Tournament disallows the Mega Evolution mechanic"), Util.DUMMY_UUID);
-            if (isDynamaxDisallowed)
-                player.sendMessage(Text.of(TextFormatting.RED, "Your ", pokemon.getLocalizedName(), " will be unable to Dynamax because this Tournament disallows the Dynamax mechanic"), Util.DUMMY_UUID);
-        }
         return true;
     }
 
