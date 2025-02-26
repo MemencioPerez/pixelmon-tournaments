@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pixelmon-tournaments
-          path: build/libs/tournaments-*.jar
+          path: build/libs/Tournaments-*.jar
