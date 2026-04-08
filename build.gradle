@@ -111,7 +111,7 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
 
-    compileOnly 'com.github.Pixelmon-Development.ForgePlaceholderAPI:api:2.0.4'
+    compileOnly 'com.github.Pixelmon-Development.ForgePlaceholderAPI:api:2.1.0'
 }
 
 jar {
