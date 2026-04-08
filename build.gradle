@@ -102,7 +102,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
+    minecraft 'net.minecraftforge:forge:26.1-62.0.9'
 
     implementation fg.deobf('pixelmon:Pixelmon-1.16.5-9.1.13-server:9.1.13')
 
